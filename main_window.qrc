@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="images">
+    <file>images/whole_isometric.jpg</file>
+  </qresource>
+</RCC>
