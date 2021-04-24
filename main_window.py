@@ -18,12 +18,12 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(934, 622)
+        MainWindow.resize(1145, 622)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.frame_2 = QFrame(self.centralwidget)
         self.frame_2.setObjectName(u"frame_2")
-        self.frame_2.setGeometry(QRect(470, 10, 451, 541))
+        self.frame_2.setGeometry(QRect(690, 10, 451, 541))
         self.frame_2.setFrameShape(QFrame.StyledPanel)
         self.frame_2.setFrameShadow(QFrame.Plain)
         self.groupBox = QGroupBox(self.frame_2)
@@ -192,7 +192,7 @@ class Ui_MainWindow(object):
         self.label_23.setGeometry(QRect(20, 60, 111, 20))
         self.tabs = QTabWidget(self.centralwidget)
         self.tabs.setObjectName(u"tabs")
-        self.tabs.setGeometry(QRect(10, 10, 451, 541))
+        self.tabs.setGeometry(QRect(10, 10, 671, 541))
         self.tab = QWidget()
         self.tab.setObjectName(u"tab")
         self.label = QLabel(self.tab)
@@ -247,10 +247,22 @@ class Ui_MainWindow(object):
         self.outputs_table.verticalHeader().setVisible(False)
         self.outputs_table.verticalHeader().setStretchLastSection(False)
         self.tabs.addTab(self.outputs_tab, "")
+        self.torque_tab = QWidget()
+        self.torque_tab.setObjectName(u"torque_tab")
+        self.torques_label = QLabel(self.torque_tab)
+        self.torques_label.setObjectName(u"torques_label")
+        self.torques_label.setGeometry(QRect(10, 10, 651, 481))
+        self.tabs.addTab(self.torque_tab, "")
+        self.omega_tab = QWidget()
+        self.omega_tab.setObjectName(u"omega_tab")
+        self.omegas_label = QLabel(self.omega_tab)
+        self.omegas_label.setObjectName(u"omegas_label")
+        self.omegas_label.setGeometry(QRect(10, 10, 651, 481))
+        self.tabs.addTab(self.omega_tab, "")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 934, 22))
+        self.menubar.setGeometry(QRect(0, 0, 1145, 22))
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")
@@ -272,7 +284,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.tabs.setCurrentIndex(1)
+        self.tabs.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -330,7 +342,7 @@ class Ui_MainWindow(object):
         self.label_12.setText(QCoreApplication.translate("MainWindow", u"Max Angular Acc", None))
         self.label_22.setText(QCoreApplication.translate("MainWindow", u"Max Angular Speed", None))
         self.label_23.setText(QCoreApplication.translate("MainWindow", u"Max Torque", None))
-        self.label.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><img src=\":/images/diagram.jpg\"/></p></body></html>", None))
+        self.label.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><img src=\":/images/images/whole_isometric.jpg\"/></p></body></html>", None))
         self.tabs.setTabText(self.tabs.indexOf(self.tab), QCoreApplication.translate("MainWindow", u"Iso View", None))
 
         __sortingEnabled = self.outputs_table.isSortingEnabled()
@@ -356,5 +368,9 @@ class Ui_MainWindow(object):
         self.outputs_table.setSortingEnabled(__sortingEnabled)
 
         self.tabs.setTabText(self.tabs.indexOf(self.outputs_tab), QCoreApplication.translate("MainWindow", u"Outputs", None))
+        self.torques_label.setText("")
+        self.tabs.setTabText(self.tabs.indexOf(self.torque_tab), QCoreApplication.translate("MainWindow", u"Torques", None))
+        self.omegas_label.setText("")
+        self.tabs.setTabText(self.tabs.indexOf(self.omega_tab), QCoreApplication.translate("MainWindow", u"Omegas", None))
     # retranslateUi
 

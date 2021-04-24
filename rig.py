@@ -1,9 +1,11 @@
 import numpy as np
-from numpy import ma
 from scipy.optimize import fsolve
 
-from matplotlib import ticker, cm
 import matplotlib.pyplot as plt
+from matplotlib.backends.backend_agg import FigureCanvasAgg
+from matplotlib.figure import Figure
+from PIL import Image
+from PIL import ImageQt
 
 
 class Rig:
@@ -35,7 +37,9 @@ class Rig:
         self.motor_torque = motor_torque
         self.motor_rpm = motor_rpm
 
-        self.grid_spacing = np.radians(2.5)
+        # self.grid_spacing = np.radians(2.5)
+        plot_steps = 15
+        self.grid_spacing = np.radians(ctc_rotation) / plot_steps
 
         self.z_I = z_I
         self.x_I = x_I
@@ -174,52 +178,36 @@ class Rig:
         break_point = 0
 
     def calculate(self):
+        def plot(title1, title2, data1, data2):
+            fig = Figure(figsize=(5, 4), dpi=100)
+            canvas = FigureCanvasAgg(fig)
+
+            axs = fig.subplots(2, 1)
+
+            img1 = axs[0].scatter(self.roll, self.pitch, s=50, c=data1)
+            axs[0].set_aspect('equal', 'box')
+            axs[0].set_title(title1, fontsize=10)
+            fig.colorbar(img1, ax=axs[0])
+            # axs[0].legend(['2', '4'])
+            # axs[0].legend(sorted(data1)[::int(len(data1) / 4)])
+
+            img2 = axs[1].scatter(self.roll, self.pitch, s=50, c=data2)
+            axs[1].set_aspect('equal', 'box')
+            axs[1].set_title(title2, fontsize=10)
+            fig.colorbar(img2, ax=axs[1])
+
+            fig.tight_layout()
+
+            canvas.draw()
+            buf = canvas.buffer_rgba()
+            X = np.asarray(buf)
+            return ImageQt.ImageQt(Image.fromarray(X))
+
         # pitch and roll
         self.max_pitch, self.max_roll = self.calc_max_pitch_and_roll()
         print('maxes', np.degrees(self.max_pitch), np.degrees(self.max_roll))
 
         self.calc_ratios(2)
-
-        # names = ['Sumit', 'Ashu', 'Sonu', 'Kajal', 'Kavita', 'Naman']
-        # subjects = ['Maths', 'Hindi', 'English', 'Social Studies', 'Science', 'Computer Science']
-        # names = np.arange(self.ctc_min_angle,
-        #                   self.ctc_max_angle + self.grid_spacing,
-        #                   self.grid_spacing)
-        # names = [round(np.degrees(n), 5) for n in names]
-        # subjects = np.arange(self.ctc_min_angle,
-        #                      self.ctc_max_angle + self.grid_spacing,
-        #                      self.grid_spacing)
-        # subjects = [round(np.degrees(n), 5) for n in subjects]
-
-        # plt.xticks(ticks=np.arange(len(names)), labels=names, rotation=90)
-        # plt.yticks(ticks=np.arange(len(subjects)), labels=subjects)
-        # # set the cmap as Blues and interpolation as spline16
-        # # plt.imshow(self.roll, cmap='Blues', interpolation="spline16")
-        # hm = plt.scatter(self.roll, self.pitch, s=200, c=self.pitch_torque)
-        # plt.colorbar(hm)
-        # plt.show()
-
-        fig, axs = plt.subplots(2, 2)
-
-        axs[0, 0].scatter(self.roll, self.pitch, s=100, c=self.pitch_torque)
-        axs[0, 0].set_aspect('equal', 'box')
-        axs[0, 0].set_title('Pitch Torque', fontsize=10)
-        # axs[0, 0].colorbar(a)
-
-        axs[1, 0].scatter(self.roll, self.pitch, s=200, c=self.pitch_torque)
-        axs[1, 0].set_aspect('equal', 'box')
-        axs[1, 0].set_title('Roll Torque', fontsize=10)
-
-        axs[0, 1].scatter(self.roll, self.pitch, s=200, c=self.pitch_omega)
-        axs[0, 1].set_aspect('equal', 'box')
-        axs[0, 1].set_title('Pitch Omega', fontsize=10)
-
-        axs[1, 1].scatter(self.roll, self.pitch, s=200, c=self.roll_omega)
-        axs[1, 1].set_aspect('equal', 'box')
-        axs[1, 1].set_title('Roll Omega', fontsize=10)
-
-        fig.tight_layout()
-
 
         p1, _ = self.calc_rod_mount_locations(np.radians(90), np.radians(90))
         p2, _ = self.calc_rod_mount_locations(np.radians(0), np.radians(0))
@@ -232,4 +220,5 @@ class Rig:
         print('roll rotation', max(self.roll), min(self.roll))
         print('roll rotation', max(self.roll) - min(self.roll))
 
-        plt.show()
+        self.torque_plot = plot('Pitch Torque', 'Roll Torque', self.pitch_torque, self.roll_torque)
+        self.omega_plot = plot('Pitch Omega', 'Roll Omega', self.pitch_omega, self.roll_omega)

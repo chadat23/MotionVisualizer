@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>934</width>
+    <width>1145</width>
     <height>622</height>
    </rect>
   </property>
@@ -17,7 +17,7 @@
    <widget class="QFrame" name="frame_2">
     <property name="geometry">
      <rect>
-      <x>470</x>
+      <x>690</x>
       <y>10</y>
       <width>451</width>
       <height>541</height>
@@ -729,7 +729,7 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>451</width>
+      <width>671</width>
       <height>541</height>
      </rect>
     </property>
@@ -874,6 +874,42 @@
       </item>
      </widget>
     </widget>
+    <widget class="QWidget" name="torque_tab">
+     <attribute name="title">
+      <string>Torques</string>
+     </attribute>
+     <widget class="QLabel" name="torques_label">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>651</width>
+        <height>481</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="omega_tab">
+     <attribute name="title">
+      <string>Omegas</string>
+     </attribute>
+     <widget class="QLabel" name="omegas_label">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>651</width>
+        <height>481</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -881,7 +917,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>934</width>
+     <width>1145</width>
      <height>22</height>
     </rect>
    </property>

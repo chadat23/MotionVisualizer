@@ -3,6 +3,7 @@ import sys
 # from PySide6.QtWidgets import QApplication, QWidget, QPushButton, QMessageBox
 import numpy as np
 import PySide6.QtWidgets as Widgets
+from PySide6.QtGui import QPixmap
 
 from main_window import Ui_MainWindow
 from rig import Rig
@@ -80,29 +81,8 @@ class CalcWindow(Widgets.QMainWindow):
 
         self.rig.calculate()
 
-        # self.ui.outputs_table.setItem(1, 1, Widgets.QTableWidgetItem(str(round(self.rig.max_pitch * 180 / np.pi, 3))))
-        # self.ui.outputs_table.setItem(1, 2, Widgets.QTableWidgetItem("0.0"))
-        # self.ui.outputs_table.setItem(1, 3, Widgets.QTableWidgetItem("0.0"))
-        #
-        # self.ui.outputs_table.setItem(2, 1, Widgets.QTableWidgetItem("0.0"))
-        # self.ui.outputs_table.setItem(2, 2, Widgets.QTableWidgetItem(str(round(self.rig.max_roll * 180 / np.pi, 3))))
-        # self.ui.outputs_table.setItem(2, 3, Widgets.QTableWidgetItem("0.0"))
-
-        # # self.ui.outputs_table.setItem(3, 1, Widgets.QTableWidgetItem(str(round(self.rig.front_pitch_torque, 3))))
-        # # self.ui.outputs_table.setItem(3, 2, Widgets.QTableWidgetItem(str(round(self.rig.left_pitch_torque, 3))))
-        # self.ui.outputs_table.setItem(3, 3, Widgets.QTableWidgetItem(str(round(self.rig.middle_pitch_torque, 3))))
-        #
-        # # self.ui.outputs_table.setItem(4, 1, Widgets.QTableWidgetItem(str(-round(self.rig.front_roll_torque, 3))))
-        # # self.ui.outputs_table.setItem(4, 2, Widgets.QTableWidgetItem(str(-round(self.rig.left_roll_torque, 3))))
-        # self.ui.outputs_table.setItem(4, 3, Widgets.QTableWidgetItem(str(round(self.rig.middle_roll_torque, 3))))
-        #
-        # # self.ui.outputs_table.setItem(5, 1, Widgets.QTableWidgetItem(str(-round(self.rig.front_pitch_speed, 3))))
-        # # self.ui.outputs_table.setItem(5, 2, Widgets.QTableWidgetItem(str(-round(self.rig.left_pitch_speed, 3))))
-        # self.ui.outputs_table.setItem(5, 3, Widgets.QTableWidgetItem(str(round(self.rig.middle_pitch_speed, 3))))
-        #
-        # # self.ui.outputs_table.setItem(6, 1, Widgets.QTableWidgetItem(str(-round(self.rig.front_roll_speed, 3))))
-        # # self.ui.outputs_table.setItem(6, 2, Widgets.QTableWidgetItem(str(-round(self.rig.left_roll_speed, 3))))
-        # self.ui.outputs_table.setItem(6, 3, Widgets.QTableWidgetItem(str(round(self.rig.middle_roll_speed, 3))))
+        self.ui.torques_label.setPixmap(QPixmap.fromImage(self.rig.torque_plot))
+        self.ui.omegas_label.setPixmap(QPixmap.fromImage(self.rig.omega_plot))
 
 
 def run():
