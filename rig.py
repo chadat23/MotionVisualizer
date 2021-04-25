@@ -10,7 +10,7 @@ from PIL import ImageQt
 
 class Rig:
     def __init__(self, rod_mount, motor_point, motor_angle, motor_torque, motor_rpm,
-                 ctc_length, ctc_rest_angle, ctc_rotation, ctc_current_angle,
+                 ctc_length, ctc_rest_angle, ctc_rotation,
                  z_I=-1, x_I=-1):
         self.motor1_point = motor_point
         self.motor2_point = np.copy(motor_point)
@@ -18,7 +18,6 @@ class Rig:
 
         self.motor1_angle = np.radians(motor_angle)
         self.motor2_angle = -np.radians(motor_angle)
-        # self.ctc_current_angle = np.radians(ctc_current_angle)
         self.ctc_rest_angle = np.radians(ctc_rest_angle)
 
         self.ctc_min_angle = self.ctc_rest_angle - np.radians(ctc_rotation) / 2
@@ -44,19 +43,17 @@ class Rig:
         self.z_I = z_I
         self.x_I = x_I
 
+    @staticmethod
+    def calc_length(point1, point2=np.zeros(3)):
+        point = point1 - point2
+        return (point[0] ** 2 + point[1] ** 2 + point[2] ** 2) ** 0.5
+
     def calc_ctc_location(self, motor_point, motor_angle, ctc_angle):
         ctc_x = motor_point[0] + self.ctc_length * np.cos(motor_angle) * np.cos(ctc_angle)
         ctc_y = motor_point[1] + self.ctc_length * np.sin(ctc_angle)
         ctc_z = motor_point[2] + self.ctc_length * np.sin(motor_angle) * np.cos(ctc_angle)
 
         return np.array([ctc_x, ctc_y, ctc_z])
-
-    @staticmethod
-    def calc_length(point1, point2=np.zeros(3)):
-        point = point1 - point2
-        print(point1, point2, point, (point[0] ** 2 + point[1] ** 2 + point[2] ** 2) ** 0.5)
-        return (point[0] ** 2 + point[1] ** 2 + point[2] ** 2) ** 0.5
-        # return np.hypot(np.hypot(point[0], point[1]), point[2])
 
     def calc_rod_mount_locations(self, ctc1_angle, ctc2_angle):
         def equations(p, rod_mount_length, push_rod_length, rod_mount_spacing, ctc1, ctc2):
@@ -88,14 +85,20 @@ class Rig:
 
         return np.array([x1, y1, z1]), np.array([x2, y2, z2])
 
-    def calc_max_pitch_and_roll(self):
-        rod_mount_point1, rod_mount_point2 = self.calc_rod_mount_locations(self.ctc_max_angle, self.ctc_max_angle)
-        pitch, _ = self.calc_pitch_and_roll(rod_mount_point1, rod_mount_point2)
-
-        rod_mount_point1, rod_mount_point2 = self.calc_rod_mount_locations(self.ctc_max_angle, self.ctc_min_angle)
-        _, roll = self.calc_pitch_and_roll(rod_mount_point1, rod_mount_point2)
-
-        return pitch - self.rod_mount_base_angle, roll
+    # def calc_max_pitch_and_roll(self):
+    #     """
+    #
+    #     This tends to slightly underestimate the max roll given how it works but it is close.
+    #
+    #     :return:
+    #     """
+    #     rod_mount_point1, rod_mount_point2 = self.calc_rod_mount_locations(self.ctc_max_angle, self.ctc_max_angle)
+    #     pitch, _ = self.calc_pitch_and_roll(rod_mount_point1, rod_mount_point2)
+    #
+    #     rod_mount_point1, rod_mount_point2 = self.calc_rod_mount_locations(self.ctc_max_angle, self.ctc_min_angle)
+    #     _, roll = self.calc_pitch_and_roll(rod_mount_point1, rod_mount_point2)
+    #
+    #     return pitch - self.rod_mount_base_angle, roll
 
     @staticmethod
     def calc_pitch_and_roll(rod_mount1, rod_mount2):
@@ -109,7 +112,7 @@ class Rig:
 
         return pitch, roll
 
-    def calc_ratios(self, d_angle):
+    def calc_performance(self, d_angle):
         d_angle = np.radians(d_angle)
 
         def numerical_derivative(ctc_angle1_t0, ctc_angle2_t0, ctc_angle1_t1, ctc_angle2_t1):
@@ -204,21 +207,14 @@ class Rig:
             return ImageQt.ImageQt(Image.fromarray(X))
 
         # pitch and roll
-        self.max_pitch, self.max_roll = self.calc_max_pitch_and_roll()
-        print('maxes', np.degrees(self.max_pitch), np.degrees(self.max_roll))
+        # self.max_pitch, self.max_roll = self.calc_max_pitch_and_roll()
 
-        self.calc_ratios(2)
+        self.calc_performance(2)
 
-        p1, _ = self.calc_rod_mount_locations(np.radians(90), np.radians(90))
-        p2, _ = self.calc_rod_mount_locations(np.radians(0), np.radians(0))
-        print('pitch dist', self.calc_length(p1, p2))
-        p1, _ = self.calc_rod_mount_locations(np.radians(90), np.radians(0))
-        p2, _ = self.calc_rod_mount_locations(np.radians(0), np.radians(90))
-        print('roll dist', self.calc_length(p1, p2))
-        print('pitch rotation', max(self.pitch), min(self.pitch))
-        print('pitch rotation', max(self.pitch) - min(self.pitch))
-        print('roll rotation', max(self.roll), min(self.roll))
-        print('roll rotation', max(self.roll) - min(self.roll))
+        # p1, _ = self.calc_rod_mount_locations(np.radians(90), np.radians(90))
+        # p2, _ = self.calc_rod_mount_locations(np.radians(0), np.radians(0))
+        # p1, _ = self.calc_rod_mount_locations(np.radians(90), np.radians(0))
+        # p2, _ = self.calc_rod_mount_locations(np.radians(0), np.radians(90))
 
         self.torque_plot = plot('Pitch Torque', 'Roll Torque', self.pitch_torque, self.roll_torque)
         self.omega_plot = plot('Pitch Omega', 'Roll Omega', self.pitch_omega, self.roll_omega)
