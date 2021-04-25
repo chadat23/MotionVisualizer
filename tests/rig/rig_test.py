@@ -60,6 +60,7 @@ def test_rig_la_init(rig_la_inputs):
     assert np.isclose(rig.rod_mount_length, 37.218946787892854)
     assert np.isclose(rig.linear_travel, travel)
     assert np.isclose(rig.screw_pitch, screw_pitch)
+    assert np.isclose(rig.travel_per_rad, screw_pitch / (2 * np.pi))
     assert rig.motor_torque == motor_torque
     assert rig.motor_rpm == motor_rpm
     assert rig.z_I == z_I
@@ -108,7 +109,7 @@ def test_calc_rod_mount_locations_ctc(rig_ctc_w_I, ctc_angles_w_rod_mount_locati
 def test_calc_rod_mount_locations_la(rig_la_w_I, pushrod_lengths_w_mount_locations):
     pushrod1, pushrod2, rod_mount1, rod_mount2 = pushrod_lengths_w_mount_locations
 
-    actual_point1, actual_point2 = rig_la_w_I.calc_rod_mount_locations(pushrod1=pushrod1, pushrod2=pushrod2)
+    actual_point1, actual_point2 = rig_la_w_I.calc_rod_mount_locations(pushrod1, pushrod2)
 
     assert np.all(np.isclose(rod_mount1, actual_point1, atol=1e-3))
     assert np.all(np.isclose(rod_mount2, actual_point2, atol=1e-3))
@@ -123,13 +124,25 @@ def test_calc_pitch_and_roll(rig_ctc_w_I, rod_mounts_and_pitch_and_roll):
     assert np.all(np.isclose(rig_ctc_w_I.calc_pitch_and_roll(rod_mount1, rod_mount2), pitch_and_roll))
 
 
-def test_calc_performance(rig_ctc_w_I, performance_info):
-    d_angle, pitch, roll, pitch_torque, roll_torque, pitch_omega, roll_omega = performance_info
+def test_calc_performance_ctc(rig_ctc_w_I, performance_info_ctc):
+    pitch, roll, pitch_torque, roll_torque, pitch_omega, roll_omega = performance_info_ctc
 
-    rig_ctc_w_I.calc_performance(d_angle)
+    rig_ctc_w_I.calc_performance()
     assert np.all(np.isclose(rig_ctc_w_I.pitch, pitch))
     assert np.all(np.isclose(rig_ctc_w_I.roll, roll))
     assert np.all(np.isclose(rig_ctc_w_I.pitch_torque, pitch_torque))
     assert np.all(np.isclose(rig_ctc_w_I.roll_torque, roll_torque))
     assert np.all(np.isclose(rig_ctc_w_I.pitch_omega, pitch_omega))
     assert np.all(np.isclose(rig_ctc_w_I.roll_omega, roll_omega))
+
+
+def test_calc_performance_linear(rig_la_w_I, performance_info_linear):
+    pitch, roll, pitch_torque, roll_torque, pitch_omega, roll_omega = performance_info_linear
+
+    rig_la_w_I.calc_performance()
+    assert np.all(np.isclose(rig_la_w_I.pitch, pitch))
+    assert np.all(np.isclose(rig_la_w_I.roll, roll))
+    assert np.all(np.isclose(rig_la_w_I.pitch_torque, pitch_torque))
+    assert np.all(np.isclose(rig_la_w_I.roll_torque, roll_torque))
+    assert np.all(np.isclose(rig_la_w_I.pitch_omega, pitch_omega))
+    assert np.all(np.isclose(rig_la_w_I.roll_omega, roll_omega))

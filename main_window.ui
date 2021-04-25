@@ -953,7 +953,7 @@
          <string>X</string>
         </property>
        </widget>
-       <widget class="QLineEdit" name="rod_mount_x_la">
+       <widget class="QLineEdit" name="rod_mount_x_linear">
         <property name="geometry">
          <rect>
           <x>20</x>
@@ -979,7 +979,7 @@
          <string>Y</string>
         </property>
        </widget>
-       <widget class="QLineEdit" name="rod_mount_y_la">
+       <widget class="QLineEdit" name="rod_mount_y_linear">
         <property name="geometry">
          <rect>
           <x>20</x>
@@ -1005,7 +1005,7 @@
          <string>Z</string>
         </property>
        </widget>
-       <widget class="QLineEdit" name="rod_mount_z_la">
+       <widget class="QLineEdit" name="rod_mount_z_linear">
         <property name="geometry">
          <rect>
           <x>20</x>
@@ -1044,7 +1044,7 @@
          <string>Z</string>
         </property>
        </widget>
-       <widget class="QLineEdit" name="motor_y_2">
+       <widget class="QLineEdit" name="lower_mount_y_linear">
         <property name="geometry">
          <rect>
           <x>20</x>
@@ -1057,7 +1057,7 @@
          <string>-8</string>
         </property>
        </widget>
-       <widget class="QLineEdit" name="motor_z_2">
+       <widget class="QLineEdit" name="lower_mount_z_linear">
         <property name="geometry">
          <rect>
           <x>20</x>
@@ -1096,7 +1096,7 @@
          <string>Y</string>
         </property>
        </widget>
-       <widget class="QLineEdit" name="motor_x_2">
+       <widget class="QLineEdit" name="lower_mount_x_linear">
         <property name="geometry">
          <rect>
           <x>20</x>
@@ -1122,7 +1122,7 @@
        <property name="title">
         <string>Actuator</string>
        </property>
-       <widget class="QLineEdit" name="la_travel">
+       <widget class="QLineEdit" name="linear_travel">
         <property name="geometry">
          <rect>
           <x>20</x>
@@ -1148,7 +1148,7 @@
          <string>Travel</string>
         </property>
        </widget>
-       <widget class="QLineEdit" name="la_pitch">
+       <widget class="QLineEdit" name="screw_pitch">
         <property name="geometry">
          <rect>
           <x>20</x>
@@ -1158,7 +1158,7 @@
          </rect>
         </property>
         <property name="text">
-         <string>45</string>
+         <string>0.1968503</string>
         </property>
        </widget>
        <widget class="QLabel" name="label_34">
@@ -1187,7 +1187,7 @@
          <string>Motor Max Torque</string>
         </property>
        </widget>
-       <widget class="QLineEdit" name="motor_torque_ctc_2">
+       <widget class="QLineEdit" name="motor_torque_linear">
         <property name="geometry">
          <rect>
           <x>20</x>
@@ -1213,7 +1213,7 @@
          <string>Motor Max RPM</string>
         </property>
        </widget>
-       <widget class="QLineEdit" name="motor_rpm_ctc_2">
+       <widget class="QLineEdit" name="motor_rpm_linear">
         <property name="geometry">
          <rect>
           <x>20</x>
@@ -1239,7 +1239,7 @@
        <property name="title">
         <string>Moment of Inertia</string>
        </property>
-       <widget class="QLineEdit" name="z_I_2">
+       <widget class="QLineEdit" name="z_I_linear">
         <property name="geometry">
          <rect>
           <x>20</x>
@@ -1262,7 +1262,7 @@
          <string>About Z</string>
         </property>
        </widget>
-       <widget class="QLineEdit" name="x_I_2">
+       <widget class="QLineEdit" name="x_I_linear">
         <property name="geometry">
          <rect>
           <x>20</x>
@@ -1285,19 +1285,6 @@
          <string>About X</string>
         </property>
        </widget>
-      </widget>
-      <widget class="QPushButton" name="button_calc_2">
-       <property name="geometry">
-        <rect>
-         <x>320</x>
-         <y>270</y>
-         <width>75</width>
-         <height>24</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Calc</string>
-       </property>
       </widget>
      </widget>
     </widget>

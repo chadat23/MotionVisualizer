@@ -38,17 +38,35 @@ class CalcWindow(Widgets.QMainWindow):
                            np.array([float(self.ui.motor_x.text()),
                                      float(self.ui.motor_y.text()),
                                      float(self.ui.motor_z.text())]),
-                           float(self.ui.motor_angle.text()),
-                           float(self.ui.motor_torque_ctc.text()),
-                           float(self.ui.motor_rpm_ctc.text()),
-                           float(self.ui.ctc_length.text()),
-                           float(self.ui.ctc_rest_angle.text()),
-                           float(self.ui.ctc_rotation.text()),
-                           'ctc', z_I, x_I,)
+                           motor_angle=float(self.ui.motor_angle.text()),
+                           motor_torque=float(self.ui.motor_torque_ctc.text()),
+                           motor_rpm=float(self.ui.motor_rpm_ctc.text()),
+                           ctc_length=float(self.ui.ctc_length.text()),
+                           ctc_rest_angle=float(self.ui.ctc_rest_angle.text()),
+                           ctc_total_rotation=float(self.ui.ctc_rotation.text()),
+                           drive='ctc', z_I=z_I, x_I=x_I,)
 
         elif self.ui.inputs_tab.currentWidget() == self.ui.la_tab:
-            z_I = -1
-            x_I = -1
+            if self.ui.z_I_linear.text():
+                z_I = float(self.ui.z_I_linear.text())
+            else:
+                z_I = -1
+            if self.ui.x_I_linear.text():
+                x_I = float(self.ui.x_I_linear.text())
+            else:
+                x_I = -1
+
+            self.rig = Rig(np.array([float(self.ui.rod_mount_x_linear.text()),
+                                     float(self.ui.rod_mount_y_linear.text()),
+                                     float(self.ui.rod_mount_z_linear.text())]),
+                           np.array([float(self.ui.lower_mount_x_linear.text()),
+                                     float(self.ui.lower_mount_x_linear.text()),
+                                     float(self.ui.lower_mount_x_linear.text())]),
+                           motor_torque=float(self.ui.motor_torque_linear.text()),
+                           motor_rpm=float(self.ui.motor_rpm_linear.text()),
+                           linear_travel=float(self.ui.linear_travel.text()),
+                           screw_pitch=float(self.ui.screw_pitch.text()),
+                           drive='linear', z_I=z_I, x_I=x_I, )
 
         self.rig.calculate()
 

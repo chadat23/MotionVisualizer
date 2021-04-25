@@ -7,6 +7,9 @@ from matplotlib.figure import Figure
 from PIL import Image
 from PIL import ImageQt
 
+CTC = 'ctc'
+LINEAR = 'linear'
+
 
 class Rig:
     def __init__(self, rod_mount, lower_pivot, motor_angle=0, motor_torque=0, motor_rpm=0,
@@ -17,7 +20,8 @@ class Rig:
         self.lower_pivot2 = np.copy(lower_pivot)
         self.lower_pivot2[2] *= -1
 
-        if drive == 'ctc':
+        plot_steps = 15
+        if drive == CTC:
             self.motor1_angle = np.radians(motor_angle)
             self.motor2_angle = -np.radians(motor_angle)
             self.ctc_rest_angle = np.radians(ctc_rest_angle)
@@ -30,9 +34,19 @@ class Rig:
             ctc_point = self.calc_ctc_location(self.lower_pivot1, self.motor1_angle, self.ctc_rest_angle)
             self.push_rod_length = self.calc_length(rod_mount, ctc_point)
 
-        elif drive == 'linear':
+            self.grid_spacing = np.radians(ctc_total_rotation) / plot_steps
+
+        elif drive == LINEAR:
             self.linear_travel = linear_travel
             self.screw_pitch = screw_pitch
+
+            pushrod_length = self.calc_length(rod_mount, lower_pivot)
+            self.pushrod_min_length = pushrod_length - linear_travel / 2
+            self.pushrod_max_length = pushrod_length + linear_travel / 2
+
+            self.travel_per_rad = screw_pitch / (2 * np.pi)
+
+            self.grid_spacing = linear_travel / plot_steps
 
         self.rod_mount_width = 2 * rod_mount[2]
         self.rod_mount = rod_mount
@@ -41,10 +55,6 @@ class Rig:
 
         self.motor_torque = motor_torque
         self.motor_rpm = motor_rpm
-
-        # self.grid_spacing = np.radians(2.5)
-        plot_steps = 15
-        self.grid_spacing = np.radians(ctc_total_rotation) / plot_steps
 
         self.z_I = z_I
         self.x_I = x_I
@@ -63,7 +73,7 @@ class Rig:
 
         return np.array([ctc_x, ctc_y, ctc_z])
 
-    def calc_rod_mount_locations(self, ctc1_angle=0, ctc2_angle=0, pushrod1=0, pushrod2=0):
+    def calc_rod_mount_locations(self, position1, position2):
         def equations(p, rod_mount_length, push_rod1_length, push_rod2_length, rod_mount_spacing, ctc1, ctc2):
             x1, x2, y1, y2, z1, z2 = p
 
@@ -71,22 +81,24 @@ class Rig:
                     rod_mount_length ** 2 - (x2 ** 2 + y2 ** 2 + z2 ** 2),
                     rod_mount_spacing ** 2 - ((x2 - x1) ** 2 + (y2 - y1) ** 2 + (z2 - z1) ** 2),
                     push_rod1_length ** 2 - ((x1 - ctc1[0]) ** 2
-                                            + (y1 - ctc1[1]) ** 2
-                                            + (z1 - ctc1[2]) ** 2),
+                                             + (y1 - ctc1[1]) ** 2
+                                             + (z1 - ctc1[2]) ** 2),
                     push_rod2_length ** 2 - ((x2 - ctc2[0]) ** 2
-                                            + (y2 - ctc2[1]) ** 2
-                                            + (z2 - ctc2[2]) ** 2),
+                                             + (y2 - ctc2[1]) ** 2
+                                             + (z2 - ctc2[2]) ** 2),
                     x1 - x2)
 
         # calc for ctc end positions
-        if ctc1_angle:
-            lower_pivot1 = self.calc_ctc_location(self.lower_pivot1, self.motor1_angle, ctc1_angle)
-            lower_pivot2 = self.calc_ctc_location(self.lower_pivot2, self.motor2_angle, ctc2_angle)
+        if self.drive == CTC:
+            lower_pivot1 = self.calc_ctc_location(self.lower_pivot1, self.motor1_angle, position1)
+            lower_pivot2 = self.calc_ctc_location(self.lower_pivot2, self.motor2_angle, position2)
             pushrod1 = self.push_rod_length
             pushrod2 = self.push_rod_length
-        elif pushrod1:
+        elif self.drive == LINEAR:
             lower_pivot1 = self.lower_pivot1
             lower_pivot2 = self.lower_pivot1
+            pushrod1 = position1
+            pushrod2 = position2
 
         rm = self.rod_mount
         x1, x2, y1, y2, z1, z2 = fsolve(equations, (rm[0], rm[0], rm[1], rm[1], rm[2], -rm[2]),
@@ -127,17 +139,45 @@ class Rig:
 
         return pitch, roll
 
-    def calc_performance(self, d_angle):
-        d_angle = np.radians(d_angle)
+    def calc_performance(self):
+        if self.drive == CTC:
+            delta = 1  # values will be checked one degree on either side of the nominal position
+            delta = np.radians(delta)
 
-        def numerical_derivative(ctc_angle1_t0, ctc_angle2_t0, ctc_angle1_t1, ctc_angle2_t1):
-            rod_mount1_t0, rod_mount2_t0 = self.calc_rod_mount_locations(ctc_angle1_t0, ctc_angle2_t0)
-            rod_mount1_t1, rod_mount2_t1 = self.calc_rod_mount_locations(ctc_angle1_t1, ctc_angle2_t1)
+            def grid_points():
+                for ctc1_angle in np.arange(self.ctc_min_angle,
+                                            self.ctc_max_angle + self.grid_spacing / 2,
+                                            self.grid_spacing):
+                    for ctc2_angle in np.arange(self.ctc_min_angle,
+                                                self.ctc_max_angle + self.grid_spacing / 2,
+                                                self.grid_spacing):
+                        yield ctc1_angle, ctc2_angle
+
+        elif self.drive == LINEAR:
+            delta = 1  # values will be checked 1 percent of linear travel on either side of the nominal position
+            delta = self.linear_travel / 100 * delta
+
+            def grid_points():
+                for pushrod1_length in np.arange(self.pushrod_min_length,
+                                                 self.pushrod_max_length + self.grid_spacing / 2,
+                                                 self.grid_spacing):
+                    for pushrod2_length in np.arange(self.pushrod_min_length,
+                                                     self.pushrod_max_length + self.grid_spacing / 2,
+                                                     self.grid_spacing):
+                        yield pushrod1_length, pushrod2_length
+
+        def numerical_derivative(position1_t0, position2_t0, position1_t1, position2_t1):
+            rod_mount1_t0, rod_mount2_t0 = self.calc_rod_mount_locations(position1_t0, position2_t0)
+            rod_mount1_t1, rod_mount2_t1 = self.calc_rod_mount_locations(position1_t1, position2_t1)
 
             pitch1, roll1 = self.calc_pitch_and_roll(rod_mount1_t0, rod_mount2_t0)
             pitch2, roll2 = self.calc_pitch_and_roll(rod_mount1_t1, rod_mount2_t1)
 
-            return (pitch2 - pitch1) / (2 * d_angle), (roll2 - roll1) / (2 * d_angle)
+            if self.drive == CTC:
+                return (pitch2 - pitch1) / (2 * delta), (roll2 - roll1) / (2 * delta)
+            elif self.drive == LINEAR:
+                return (pitch2 - pitch1) / (2 * delta / self.travel_per_rad), \
+                       (roll2 - roll1) / (2 * delta / self.travel_per_rad)
 
         def torques(pitch_ratio, roll_ratio):
             pitch = self.motor_torque / pitch_ratio * 2
@@ -165,35 +205,32 @@ class Rig:
         self.pitch = []
         self.roll = []
 
-        for i, ctc1_angle in enumerate(np.arange(self.ctc_min_angle,
-                                                 self.ctc_max_angle + self.grid_spacing,
-                                                 self.grid_spacing)):
-            for j, ctc2_angle in enumerate(np.arange(self.ctc_min_angle,
-                                                     self.ctc_max_angle + self.grid_spacing,
-                                                     self.grid_spacing)):
-                pitch_ratio, _ = numerical_derivative(ctc1_angle - d_angle,
-                                                      ctc2_angle - d_angle,
-                                                      ctc1_angle + d_angle,
-                                                      ctc2_angle + d_angle)
-                _, roll_ratio = numerical_derivative(ctc1_angle - d_angle,
-                                                     ctc2_angle + d_angle,
-                                                     ctc1_angle + d_angle,
-                                                     ctc2_angle - d_angle)
-                pitch_torque, roll_torque = torques(pitch_ratio, roll_ratio)
-                pitch_omega, roll_omega = omegas(pitch_ratio, roll_ratio)
-                pitch, roll = angles(ctc1_angle, ctc2_angle)
+        for position1, position2 in grid_points():
+            pitch_ratio, _ = numerical_derivative(position1 - delta,
+                                                  position2 - delta,
+                                                  position1 + delta,
+                                                  position2 + delta)
+            _, roll_ratio = numerical_derivative(position1 - delta,
+                                                 position2 + delta,
+                                                 position1 + delta,
+                                                 position2 - delta)
+            pitch_torque, roll_torque = torques(pitch_ratio, roll_ratio)
+            pitch_omega, roll_omega = omegas(pitch_ratio, roll_ratio)
+            pitch, roll = angles(position1, position2)
 
-                self.pitch.append(np.degrees(pitch - self.rod_mount_base_angle))
-                self.roll.append(np.degrees(roll))
-                self.pitch_torque.append(pitch_torque)
-                self.roll_torque.append(roll_torque)
-                self.pitch_omega.append(pitch_omega)
-                self.roll_omega.append(roll_omega)
+            self.pitch.append(np.degrees(pitch - self.rod_mount_base_angle))
+            self.roll.append(np.degrees(roll))
+            self.pitch_torque.append(pitch_torque)
+            self.roll_torque.append(roll_torque)
+            self.pitch_omega.append(pitch_omega)
+            self.roll_omega.append(roll_omega)
 
-                if i == 0 and j == 18:
-                    a = 0
-
-        break_point = 0
+        # print(self.pitch)
+        # print(self.roll)
+        # print(self.pitch_torque)
+        # print(self.roll_torque)
+        # print(self.pitch_omega)
+        # print(self.roll_omega)
 
     def calculate(self):
         def plot(title1, title2, data1, data2):
@@ -224,7 +261,7 @@ class Rig:
         # pitch and roll
         # self.max_pitch, self.max_roll = self.calc_max_pitch_and_roll()
 
-        self.calc_performance(2)
+        self.calc_performance()
 
         # p1, _ = self.calc_rod_mount_locations(np.radians(90), np.radians(90))
         # p2, _ = self.calc_rod_mount_locations(np.radians(0), np.radians(0))
