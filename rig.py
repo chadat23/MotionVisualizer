@@ -9,39 +9,47 @@ from PIL import ImageQt
 
 
 class Rig:
-    def __init__(self, rod_mount, motor_point, motor_angle, motor_torque, motor_rpm,
-                 ctc_length, ctc_rest_angle, ctc_rotation,
-                 z_I=-1, x_I=-1):
-        self.motor1_point = motor_point
-        self.motor2_point = np.copy(motor_point)
-        self.motor2_point[2] *= -1
+    def __init__(self, rod_mount, lower_pivot, motor_angle=0, motor_torque=0, motor_rpm=0,
+                 ctc_length=0, ctc_rest_angle=0, ctc_total_rotation=0,
+                 linear_travel=0, screw_pitch=0,
+                 drive='', z_I=-1, x_I=-1):
+        self.lower_pivot1 = lower_pivot
+        self.lower_pivot2 = np.copy(lower_pivot)
+        self.lower_pivot2[2] *= -1
 
-        self.motor1_angle = np.radians(motor_angle)
-        self.motor2_angle = -np.radians(motor_angle)
-        self.ctc_rest_angle = np.radians(ctc_rest_angle)
+        if drive == 'ctc':
+            self.motor1_angle = np.radians(motor_angle)
+            self.motor2_angle = -np.radians(motor_angle)
+            self.ctc_rest_angle = np.radians(ctc_rest_angle)
 
-        self.ctc_min_angle = self.ctc_rest_angle - np.radians(ctc_rotation) / 2
-        self.ctc_max_angle = self.ctc_rest_angle + np.radians(ctc_rotation) / 2
+            self.ctc_min_angle = self.ctc_rest_angle - np.radians(ctc_total_rotation) / 2
+            self.ctc_max_angle = self.ctc_rest_angle + np.radians(ctc_total_rotation) / 2
+
+            self.ctc_length = ctc_length
+
+            ctc_point = self.calc_ctc_location(self.lower_pivot1, self.motor1_angle, self.ctc_rest_angle)
+            self.push_rod_length = self.calc_length(rod_mount, ctc_point)
+
+        elif drive == 'linear':
+            self.linear_travel = linear_travel
+            self.screw_pitch = screw_pitch
 
         self.rod_mount_width = 2 * rod_mount[2]
-        self.rod_mount_length = self.calc_length(rod_mount)
         self.rod_mount = rod_mount
         self.rod_mount_base_angle = np.arctan(rod_mount[1] / rod_mount[0])
-
-        self.ctc_length = ctc_length
-
-        ctc_point = self.calc_ctc_location(self.motor1_point, self.motor1_angle, self.ctc_rest_angle)
-        self.push_rod_length = self.calc_length(rod_mount, ctc_point)
+        self.rod_mount_length = self.calc_length(rod_mount)
 
         self.motor_torque = motor_torque
         self.motor_rpm = motor_rpm
 
         # self.grid_spacing = np.radians(2.5)
         plot_steps = 15
-        self.grid_spacing = np.radians(ctc_rotation) / plot_steps
+        self.grid_spacing = np.radians(ctc_total_rotation) / plot_steps
 
         self.z_I = z_I
         self.x_I = x_I
+
+        self.drive = drive
 
     @staticmethod
     def calc_length(point1, point2=np.zeros(3)):
@@ -55,32 +63,39 @@ class Rig:
 
         return np.array([ctc_x, ctc_y, ctc_z])
 
-    def calc_rod_mount_locations(self, ctc1_angle, ctc2_angle):
-        def equations(p, rod_mount_length, push_rod_length, rod_mount_spacing, ctc1, ctc2):
+    def calc_rod_mount_locations(self, ctc1_angle=0, ctc2_angle=0, pushrod1=0, pushrod2=0):
+        def equations(p, rod_mount_length, push_rod1_length, push_rod2_length, rod_mount_spacing, ctc1, ctc2):
             x1, x2, y1, y2, z1, z2 = p
 
             return (rod_mount_length ** 2 - (x1 ** 2 + y1 ** 2 + z1 ** 2),
                     rod_mount_length ** 2 - (x2 ** 2 + y2 ** 2 + z2 ** 2),
                     rod_mount_spacing ** 2 - ((x2 - x1) ** 2 + (y2 - y1) ** 2 + (z2 - z1) ** 2),
-                    push_rod_length ** 2 - ((x1 - ctc1[0]) ** 2
+                    push_rod1_length ** 2 - ((x1 - ctc1[0]) ** 2
                                             + (y1 - ctc1[1]) ** 2
                                             + (z1 - ctc1[2]) ** 2),
-                    push_rod_length ** 2 - ((x2 - ctc2[0]) ** 2
+                    push_rod2_length ** 2 - ((x2 - ctc2[0]) ** 2
                                             + (y2 - ctc2[1]) ** 2
                                             + (z2 - ctc2[2]) ** 2),
                     x1 - x2)
 
         # calc for ctc end positions
-        ctc1_point = self.calc_ctc_location(self.motor1_point, self.motor1_angle, ctc1_angle)
-        ctc2_point = self.calc_ctc_location(self.motor2_point, self.motor2_angle, ctc2_angle)
+        if ctc1_angle:
+            lower_pivot1 = self.calc_ctc_location(self.lower_pivot1, self.motor1_angle, ctc1_angle)
+            lower_pivot2 = self.calc_ctc_location(self.lower_pivot2, self.motor2_angle, ctc2_angle)
+            pushrod1 = self.push_rod_length
+            pushrod2 = self.push_rod_length
+        elif pushrod1:
+            lower_pivot1 = self.lower_pivot1
+            lower_pivot2 = self.lower_pivot1
 
         rm = self.rod_mount
         x1, x2, y1, y2, z1, z2 = fsolve(equations, (rm[0], rm[0], rm[1], rm[1], rm[2], -rm[2]),
                                         (self.rod_mount_length,
-                                         self.push_rod_length,
+                                         pushrod1,
+                                         pushrod2,
                                          self.rod_mount_width,
-                                         ctc1_point,
-                                         ctc2_point)
+                                         lower_pivot1,
+                                         lower_pivot2)
                                         )
 
         return np.array([x1, y1, z1]), np.array([x2, y2, z2])

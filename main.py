@@ -22,10 +22,6 @@ class CalcWindow(Widgets.QMainWindow):
         self.ui.button_calc.clicked.connect(self.calculate)
 
     def calculate(self):
-        print('index', self.ui.inputs_tab.currentWidget())
-        print('index1', self.ui.inputs_tab.currentWidget() == self.ui.la_tab)
-        print('index2', self.ui.inputs_tab.currentWidget() == self.ui.ctc_tab)
-        # if self.ui.inputs_tab.currentIndex() =
         if self.ui.inputs_tab.currentWidget() == self.ui.ctc_tab:
             if self.ui.z_I.text():
                 z_I = float(self.ui.z_I.text())
@@ -48,15 +44,16 @@ class CalcWindow(Widgets.QMainWindow):
                            float(self.ui.ctc_length.text()),
                            float(self.ui.ctc_rest_angle.text()),
                            float(self.ui.ctc_rotation.text()),
-                           float(self.ui.ctc_current_angle.text()),
-                           z_I, x_I)
+                           'ctc', z_I, x_I,)
 
         elif self.ui.inputs_tab.currentWidget() == self.ui.la_tab:
+            z_I = -1
+            x_I = -1
 
-            self.rig.calculate()
+        self.rig.calculate()
 
-            self.ui.torques_label.setPixmap(QPixmap.fromImage(self.rig.torque_plot))
-            self.ui.omegas_label.setPixmap(QPixmap.fromImage(self.rig.omega_plot))
+        self.ui.torques_label.setPixmap(QPixmap.fromImage(self.rig.torque_plot))
+        self.ui.omegas_label.setPixmap(QPixmap.fromImage(self.rig.omega_plot))
 
 
 def run():

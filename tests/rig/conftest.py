@@ -23,20 +23,55 @@ def rig_ctc_inputs():
     return (rod_mount, motor_point,
             motor_angle, motor_torque, motor_rpm,
             ctc_length, rest_angle, total_rotation,
-            z_I, x_I)
+            'ctc', z_I, x_I)
+
+
+@pytest.fixture
+def rig_la_inputs():
+    rod_mount = np.array([23., 28.0, 8.5])
+    motor_point = np.array([45.5, -8., 13.])
+
+    motor_torque = 40*12
+    motor_rpm = 70
+
+    travel = 8
+    screw_pitch = 5 / 25.4
+
+    z_I = 400
+    x_I = 300
+
+    return (rod_mount, motor_point,
+            motor_torque, motor_rpm,
+            travel, screw_pitch,
+            'linear', z_I, x_I)
 
 
 @pytest.fixture
 def rig_ctc_w_I(rig_ctc_inputs):
     (rod_mount, motor_point,
      motor_angle, motor_torque, motor_rpm,
-     ctc_length, rest_angle, total_rotation,
-     z_I, x_I) = rig_ctc_inputs
+     ctc_length, ctc_rest_angle, ctc_total_rotation,
+     drive, z_I, x_I) = rig_ctc_inputs
 
     rig = Rig(rod_mount, motor_point,
-              motor_angle, motor_torque, motor_rpm,
-              ctc_length, rest_angle, total_rotation,
-              z_I, x_I)
+              motor_angle=motor_angle, motor_torque=motor_torque, motor_rpm=motor_rpm,
+              ctc_length=ctc_length, ctc_rest_angle=ctc_rest_angle, ctc_total_rotation=ctc_total_rotation,
+              drive=drive, z_I=z_I, x_I=x_I)
+
+    return rig
+
+
+@pytest.fixture
+def rig_la_w_I(rig_la_inputs):
+    (rod_mount, motor_point,
+     motor_torque, motor_rpm,
+     travel, screw_pitch,
+     drive, z_I, x_I) = rig_la_inputs
+
+    rig = Rig(rod_mount, motor_point,
+              motor_torque=motor_torque, motor_rpm=motor_rpm,
+              linear_travel=travel, screw_pitch=screw_pitch,
+              drive=drive, z_I=z_I, x_I=x_I)
 
     return rig
 
@@ -72,10 +107,21 @@ def ctc_angles_w_rod_mount_locations():
     ctc_angle1 = np.radians(25)
     ctc_angle2 = np.radians(35)
 
-    point1 = np.array([23.51940155, 27.37619375,  9.09020167])
+    point1 = np.array([23.51940155, 27.37619375, 9.09020167])
     point2 = np.array([23.51940155, 27.74139304, -7.90587521])
 
     return ctc_angle1, ctc_angle2, point1, point2
+
+
+@pytest.fixture
+def pushrod_lengths_w_mount_locations():
+    pushrod1 = 40
+    pushrod2 = 45
+
+    rod_mount1 = np.array([25.56061197, 26.14476677, 6.95386843])
+    rod_mount2 = np.array([25.56061197, 25.13139163, -10.01590089])
+
+    return pushrod1, pushrod2, rod_mount1, rod_mount2
 
 
 @pytest.fixture

@@ -3,24 +3,24 @@ from unittest.mock import patch
 import numpy as np
 
 
-def test_rig_init(rig_ctc_inputs):
+def test_rig_ctc_init(rig_ctc_inputs):
     from rig import Rig
 
-    (rod_mount, motor_point,
+    (rod_mount, lower_pivot,
      motor_angle, motor_torque, motor_rpm,
      ctc_length, ctc_rest_angle, ctc_total_rotation,
-     z_I, x_I) = rig_ctc_inputs
+     drive, z_I, x_I) = rig_ctc_inputs
 
-    motor2_point = np.copy(motor_point)
+    motor2_point = np.copy(lower_pivot)
     motor2_point[2] *= -1
 
-    rig = Rig(rod_mount, motor_point,
-              motor_angle, motor_torque, motor_rpm,
-              ctc_length, ctc_rest_angle, ctc_total_rotation,
-              z_I, x_I)
+    rig = Rig(rod_mount, lower_pivot,
+              motor_angle=motor_angle, motor_torque=motor_torque, motor_rpm=motor_rpm,
+              ctc_length=ctc_length, ctc_rest_angle=ctc_rest_angle, ctc_total_rotation=ctc_total_rotation,
+              drive=drive, z_I=z_I, x_I=x_I)
 
-    assert np.all(rig.motor1_point == motor_point)
-    assert np.all(rig.motor2_point == motor2_point)
+    assert np.all(rig.lower_pivot1 == lower_pivot)
+    assert np.all(rig.lower_pivot2 == motor2_point)
     assert rig.motor1_angle == np.radians(motor_angle)
     assert rig.motor2_angle == np.radians(-motor_angle)
     assert rig.ctc_rest_angle == np.radians(ctc_rest_angle)
@@ -30,6 +30,36 @@ def test_rig_init(rig_ctc_inputs):
     assert np.isclose(rig.rod_mount_length, 37.218946787892854)
     assert rig.ctc_length == ctc_length
     assert np.isclose(rig.push_rod_length, 42.22054573322952)
+    assert rig.motor_torque == motor_torque
+    assert rig.motor_rpm == motor_rpm
+    assert rig.z_I == z_I
+    assert rig.x_I == x_I
+
+
+def test_rig_la_init(rig_la_inputs):
+    from rig import Rig
+
+    (rod_mount, lower_pivot,
+     motor_torque, motor_rpm,
+     travel, screw_pitch,
+     drive, z_I, x_I) = rig_la_inputs
+
+    motor2_point = np.copy(lower_pivot)
+    motor2_point[2] *= -1
+
+    rig = Rig(rod_mount, lower_pivot,
+              motor_torque=motor_torque, motor_rpm=motor_rpm,
+              linear_travel=travel, screw_pitch=screw_pitch,
+              drive=drive, z_I=z_I, x_I=x_I)
+
+    assert np.all(rig.lower_pivot1 == lower_pivot)
+    assert np.all(rig.lower_pivot2 == motor2_point)
+    assert rig.linear_travel == travel
+    assert rig.screw_pitch == screw_pitch
+    assert rig.rod_mount_width == 2 * rod_mount[2]
+    assert np.isclose(rig.rod_mount_length, 37.218946787892854)
+    assert np.isclose(rig.linear_travel, travel)
+    assert np.isclose(rig.screw_pitch, screw_pitch)
     assert rig.motor_torque == motor_torque
     assert rig.motor_rpm == motor_rpm
     assert rig.z_I == z_I
@@ -66,13 +96,22 @@ def test_calc_ctc_location_2(rig_ctc_w_I, ctc_location_info):
     assert np.all(np.isclose(actual, ctc_location))
 
 
-def test_calc_rod_mount_locations(rig_ctc_w_I, ctc_angles_w_rod_mount_locations):
+def test_calc_rod_mount_locations_ctc(rig_ctc_w_I, ctc_angles_w_rod_mount_locations):
     ctc_angle1, ctc_angle2, expected_point1, expected_point2 = ctc_angles_w_rod_mount_locations
 
     actual_point1, actual_point2 = rig_ctc_w_I.calc_rod_mount_locations(ctc_angle1, ctc_angle2)
 
     assert np.all(np.isclose(expected_point1, actual_point1, atol=1e-3))
     assert np.all(np.isclose(expected_point2, actual_point2, atol=1e-3))
+
+
+def test_calc_rod_mount_locations_la(rig_la_w_I, pushrod_lengths_w_mount_locations):
+    pushrod1, pushrod2, rod_mount1, rod_mount2 = pushrod_lengths_w_mount_locations
+
+    actual_point1, actual_point2 = rig_la_w_I.calc_rod_mount_locations(pushrod1=pushrod1, pushrod2=pushrod2)
+
+    assert np.all(np.isclose(rod_mount1, actual_point1, atol=1e-3))
+    assert np.all(np.isclose(rod_mount2, actual_point2, atol=1e-3))
 
 
 # def test_calc_max_pitch_and_roll(rig_ctc_w_I):
