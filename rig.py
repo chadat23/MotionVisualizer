@@ -238,12 +238,12 @@ class Rig:
             self.pitch_omega.append(pitch_omega)
             self.roll_omega.append(roll_omega)
 
-        print(self.pitch)
-        print(self.roll)
-        print(self.pitch_torque)
-        print(self.roll_torque)
-        print(self.pitch_omega)
-        print(self.roll_omega)
+        # print(self.pitch)
+        # print(self.roll)
+        # print(self.pitch_torque)
+        # print(self.roll_torque)
+        # print(self.pitch_omega)
+        # print(self.roll_omega)
 
     def calculate(self):
         def plot(title1, title2, data1, data2):
@@ -255,13 +255,15 @@ class Rig:
             img1 = axs[0].scatter(self.roll, self.pitch, s=50, c=data1)
             axs[0].set_aspect('equal', 'box')
             axs[0].set_title(title1, fontsize=10)
+            axs[0].set_xlabel('Degrees of Roll')
+            axs[0].set_ylabel('Degrees of Pitch')
             fig.colorbar(img1, ax=axs[0])
-            # axs[0].legend(['2', '4'])
-            # axs[0].legend(sorted(data1)[::int(len(data1) / 4)])
 
             img2 = axs[1].scatter(self.roll, self.pitch, s=50, c=data2)
             axs[1].set_aspect('equal', 'box')
             axs[1].set_title(title2, fontsize=10)
+            axs[1].set_xlabel('Degrees of Roll')
+            axs[1].set_ylabel('Degrees of Pitch')
             fig.colorbar(img2, ax=axs[1])
 
             fig.tight_layout()
@@ -271,15 +273,7 @@ class Rig:
             X = np.asarray(buf)
             return ImageQt.ImageQt(Image.fromarray(X))
 
-        # pitch and roll
-        # self.max_pitch, self.max_roll = self.calc_max_pitch_and_roll()
-
         self.calc_performance()
-
-        # p1, _ = self.calc_rod_mount_locations(np.radians(90), np.radians(90))
-        # p2, _ = self.calc_rod_mount_locations(np.radians(0), np.radians(0))
-        # p1, _ = self.calc_rod_mount_locations(np.radians(90), np.radians(0))
-        # p2, _ = self.calc_rod_mount_locations(np.radians(0), np.radians(90))
 
         self.torque_plot = plot('Pitch Torque', 'Roll Torque', self.pitch_torque, self.roll_torque)
         self.omega_plot = plot('Pitch Omega', 'Roll Omega', self.pitch_omega, self.roll_omega)
