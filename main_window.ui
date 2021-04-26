@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>4</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -200,14 +200,44 @@
       </property>
      </widget>
     </widget>
+    <widget class="QWidget" name="tab_2">
+     <attribute name="title">
+      <string>Notes</string>
+     </attribute>
+     <widget class="QLabel" name="label_2">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>651</width>
+        <height>491</height>
+       </rect>
+      </property>
+      <property name="midLineWidth">
+       <number>9</number>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;While efforts have been made to test this, there could still be bugs.&lt;/span&gt;&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;There could be edge cases that weren't tested for. &lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;If the input geometry goes into distinctly atypical configurations (such as the ctc and pushrod going past being aligned) the resulting calculations shouldn't be trusted&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;In order to allow more flexible use, neither distance nore force units are assumed.&lt;/span&gt;&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Ensure that the input motor torque is converted appropreately so that it's units of length and force match what's used or desired elsewhere.&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Motor speed and angles are always in units of RPM and degrees. Appropreate conversions are done internally.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Omega is angular speed and is reported in units of degrees / second.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Torque is reported in whatever units are used as force and length.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Take note of the softwares notation and nomenclature. Similar software may look and work similarly but may differ in important ways.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="textFormat">
+       <enum>Qt::AutoText</enum>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </widget>
    </widget>
    <widget class="QTabWidget" name="inputs_tab">
     <property name="geometry">
      <rect>
       <x>680</x>
-      <y>0</y>
+      <y>10</y>
       <width>461</width>
-      <height>531</height>
+      <height>541</height>
      </rect>
     </property>
     <property name="currentIndex">
@@ -222,7 +252,7 @@
        <rect>
         <x>10</x>
         <y>0</y>
-        <width>431</width>
+        <width>441</width>
         <height>361</height>
        </rect>
       </property>
@@ -488,7 +518,7 @@
          <string>Length</string>
         </property>
        </widget>
-       <widget class="QLineEdit" name="ctc_rest_angle">
+       <widget class="QLineEdit" name="ctc_neutral_angle">
         <property name="geometry">
          <rect>
           <x>20</x>
@@ -511,7 +541,7 @@
          </rect>
         </property>
         <property name="text">
-         <string>Rest Angle</string>
+         <string>Neutral Angle</string>
         </property>
        </widget>
        <widget class="QLineEdit" name="ctc_rotation">
@@ -679,222 +709,174 @@
        </widget>
       </widget>
      </widget>
-     <widget class="QGroupBox" name="groupBox_2">
+     <widget class="QGroupBox" name="groupBox_13">
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>360</y>
-        <width>431</width>
+        <y>370</y>
+        <width>441</width>
         <height>131</height>
        </rect>
       </property>
       <property name="title">
-       <string>Outputs</string>
+       <string>Nominal Output Values</string>
       </property>
-      <widget class="QGroupBox" name="groupBox_6">
+      <widget class="QLabel" name="label_38">
        <property name="geometry">
         <rect>
-         <x>140</x>
-         <y>10</y>
-         <width>141</width>
-         <height>141</height>
-        </rect>
-       </property>
-       <property name="title">
-        <string>Roll</string>
-       </property>
-       <widget class="QLineEdit" name="max_roll_angle">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>20</y>
-          <width>121</width>
-          <height>22</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="max_roll_torque">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>50</y>
-          <width>121</width>
-          <height>22</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="max_roll_acc">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>80</y>
-          <width>121</width>
-          <height>22</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="max_roll_speed">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>110</y>
-          <width>121</width>
-          <height>22</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </widget>
-      <widget class="QGroupBox" name="groupBox_7">
-       <property name="geometry">
-        <rect>
-         <x>289</x>
-         <y>10</y>
-         <width>141</width>
-         <height>141</height>
-        </rect>
-       </property>
-       <property name="title">
-        <string>Pitch</string>
-       </property>
-       <widget class="QLineEdit" name="max_pitch_angle">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>20</y>
-          <width>121</width>
-          <height>22</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="max_pitch_torque">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>50</y>
-          <width>121</width>
-          <height>22</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="max_pitch_acc">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>80</y>
-          <width>121</width>
-          <height>22</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="max_pitch_speed">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>110</y>
-          <width>121</width>
-          <height>22</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </widget>
-      <widget class="QLabel" name="label_4">
-       <property name="geometry">
-        <rect>
-         <x>20</x>
+         <x>10</x>
          <y>30</y>
-         <width>71</width>
+         <width>121</width>
          <height>16</height>
         </rect>
        </property>
        <property name="text">
-        <string>Max Angle</string>
+        <string>ZX Rod Mount Angle</string>
        </property>
       </widget>
-      <widget class="QLabel" name="label_12">
+      <widget class="QLabel" name="label_41">
        <property name="geometry">
         <rect>
-         <x>20</x>
-         <y>90</y>
+         <x>10</x>
+         <y>60</y>
          <width>101</width>
          <height>20</height>
         </rect>
        </property>
        <property name="text">
-        <string>Max Angular Acc</string>
+        <string>ZX Pushrod Angle</string>
        </property>
       </widget>
-      <widget class="QLabel" name="label_22">
+      <widget class="QLineEdit" name="zx_rodmount_angle_ctc">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="geometry">
         <rect>
-         <x>20</x>
-         <y>120</y>
-         <width>111</width>
-         <height>20</height>
+         <x>170</x>
+         <y>30</y>
+         <width>61</width>
+         <height>22</height>
         </rect>
        </property>
        <property name="text">
-        <string>Max Angular Speed</string>
+        <string/>
        </property>
       </widget>
-      <widget class="QLabel" name="label_23">
+      <widget class="QLineEdit" name="zx_pushrod_angle_ctc">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="geometry">
         <rect>
-         <x>20</x>
+         <x>170</x>
          <y>60</y>
-         <width>111</width>
+         <width>61</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_42">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>90</y>
+         <width>201</width>
          <height>20</height>
         </rect>
        </property>
        <property name="text">
-        <string>Max Torque</string>
+        <string>XY Rodmount Pushrod Angle</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="xy_rodmount_pushrod_angle_ctc">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>170</x>
+         <y>90</y>
+         <width>61</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="button_calc_ctc">
+       <property name="geometry">
+        <rect>
+         <x>340</x>
+         <y>90</y>
+         <width>75</width>
+         <height>24</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Calc</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="min_ctc_pushrod_angle">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>370</x>
+         <y>60</y>
+         <width>61</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_44">
+       <property name="geometry">
+        <rect>
+         <x>240</x>
+         <y>60</y>
+         <width>131</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Min CTC Pushrod Angle</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_45">
+       <property name="geometry">
+        <rect>
+         <x>240</x>
+         <y>30</y>
+         <width>131</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Max CTC Pushrod Angle</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="max_ctc_pushrod_angle">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>370</x>
+         <y>30</y>
+         <width>61</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
        </property>
       </widget>
      </widget>
@@ -908,8 +890,8 @@
        <rect>
         <x>10</x>
         <y>0</y>
-        <width>431</width>
-        <height>361</height>
+        <width>441</width>
+        <height>291</height>
        </rect>
       </property>
       <property name="title">
@@ -921,7 +903,7 @@
          <x>10</x>
          <y>20</y>
          <width>131</width>
-         <height>331</height>
+         <height>261</height>
         </rect>
        </property>
        <property name="title">
@@ -1116,7 +1098,7 @@
          <x>150</x>
          <y>20</y>
          <width>131</width>
-         <height>331</height>
+         <height>261</height>
         </rect>
        </property>
        <property name="title">
@@ -1287,20 +1269,120 @@
        </widget>
       </widget>
      </widget>
+     <widget class="QGroupBox" name="groupBox_12">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>370</y>
+        <width>441</width>
+        <height>131</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Nominal Output Values</string>
+      </property>
+      <widget class="QLabel" name="label_32">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>30</y>
+         <width>121</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>ZX Rod Mount Angle</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_35">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>60</y>
+         <width>101</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>ZX Pushrod Angle</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="zx_rodmount_angle_linear">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>170</x>
+         <y>30</y>
+         <width>61</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="zx_pushrod_angle_linear">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>170</x>
+         <y>60</y>
+         <width>61</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_43">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>90</y>
+         <width>161</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>XY Rodmount Pushrod Angle</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="xy_rodmount_pushrod_angle_linear">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>170</x>
+         <y>90</y>
+         <width>61</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QPushButton" name="button_calc_linear">
+      <property name="geometry">
+       <rect>
+        <x>350</x>
+        <y>460</y>
+        <width>75</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Calc</string>
+      </property>
+     </widget>
     </widget>
-   </widget>
-   <widget class="QPushButton" name="button_calc">
-    <property name="geometry">
-     <rect>
-      <x>940</x>
-      <y>550</y>
-      <width>75</width>
-      <height>24</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Calc</string>
-    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

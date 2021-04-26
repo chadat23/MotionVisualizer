@@ -55,7 +55,7 @@ def rig_ctc_w_I(rig_ctc_inputs):
 
     rig = Rig(rod_mount, motor_point,
               motor_angle=motor_angle, motor_torque=motor_torque, motor_rpm=motor_rpm,
-              ctc_length=ctc_length, ctc_rest_angle=ctc_rest_angle, ctc_total_rotation=ctc_total_rotation,
+              ctc_length=ctc_length, ctc_neutral_angle=ctc_rest_angle, ctc_total_rotation=ctc_total_rotation,
               drive=drive, z_I=z_I, x_I=x_I)
 
     return rig

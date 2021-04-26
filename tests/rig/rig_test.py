@@ -16,20 +16,20 @@ def test_rig_ctc_init(rig_ctc_inputs):
 
     rig = Rig(rod_mount, lower_pivot,
               motor_angle=motor_angle, motor_torque=motor_torque, motor_rpm=motor_rpm,
-              ctc_length=ctc_length, ctc_rest_angle=ctc_rest_angle, ctc_total_rotation=ctc_total_rotation,
+              ctc_length=ctc_length, ctc_neutral_angle=ctc_rest_angle, ctc_total_rotation=ctc_total_rotation,
               drive=drive, z_I=z_I, x_I=x_I)
 
     assert np.all(rig.lower_pivot1 == lower_pivot)
     assert np.all(rig.lower_pivot2 == motor2_point)
     assert rig.motor1_angle == np.radians(motor_angle)
     assert rig.motor2_angle == np.radians(-motor_angle)
-    assert rig.ctc_rest_angle == np.radians(ctc_rest_angle)
+    assert rig.ctc_neutral_angle == np.radians(ctc_rest_angle)
     assert rig.ctc_min_angle == np.radians(ctc_rest_angle) - np.radians(ctc_total_rotation) / 2
     assert rig.ctc_max_angle == np.radians(ctc_rest_angle) + np.radians(ctc_total_rotation) / 2
     assert rig.rod_mount_width == 2 * rod_mount[2]
     assert np.isclose(rig.rod_mount_length, 37.218946787892854)
     assert rig.ctc_length == ctc_length
-    assert np.isclose(rig.push_rod_length, 42.22054573322952)
+    assert np.isclose(rig.pushrod_length, 42.22054573322952)
     assert rig.motor_torque == motor_torque
     assert rig.motor_rpm == motor_rpm
     assert rig.z_I == z_I
