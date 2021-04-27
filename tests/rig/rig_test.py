@@ -9,7 +9,7 @@ def test_rig_ctc_init(rig_ctc_inputs):
     (rod_mount, lower_pivot,
      motor_angle, motor_torque, motor_rpm,
      ctc_length, ctc_rest_angle, ctc_total_rotation,
-     drive, z_I, x_I) = rig_ctc_inputs
+     drive) = rig_ctc_inputs
 
     motor2_point = np.copy(lower_pivot)
     motor2_point[2] *= -1
@@ -17,7 +17,7 @@ def test_rig_ctc_init(rig_ctc_inputs):
     rig = Rig(rod_mount, lower_pivot,
               motor_angle=motor_angle, motor_torque=motor_torque, motor_rpm=motor_rpm,
               ctc_length=ctc_length, ctc_neutral_angle=ctc_rest_angle, ctc_total_rotation=ctc_total_rotation,
-              drive=drive, z_I=z_I, x_I=x_I)
+              drive=drive)
 
     assert np.all(rig.lower_pivot1 == lower_pivot)
     assert np.all(rig.lower_pivot2 == motor2_point)
@@ -32,8 +32,6 @@ def test_rig_ctc_init(rig_ctc_inputs):
     assert np.isclose(rig.pushrod_length, 42.22054573322952)
     assert rig.motor_torque == motor_torque
     assert rig.motor_rpm == motor_rpm
-    assert rig.z_I == z_I
-    assert rig.x_I == x_I
 
 
 def test_rig_la_init(rig_la_inputs):
@@ -42,7 +40,7 @@ def test_rig_la_init(rig_la_inputs):
     (rod_mount, lower_pivot,
      motor_torque, motor_rpm,
      travel, screw_pitch,
-     drive, z_I, x_I) = rig_la_inputs
+     drive) = rig_la_inputs
 
     motor2_point = np.copy(lower_pivot)
     motor2_point[2] *= -1
@@ -50,7 +48,7 @@ def test_rig_la_init(rig_la_inputs):
     rig = Rig(rod_mount, lower_pivot,
               motor_torque=motor_torque, motor_rpm=motor_rpm,
               linear_travel=travel, screw_pitch=screw_pitch,
-              drive=drive, z_I=z_I, x_I=x_I)
+              drive=drive)
 
     assert np.all(rig.lower_pivot1 == lower_pivot)
     assert np.all(rig.lower_pivot2 == motor2_point)
@@ -63,8 +61,6 @@ def test_rig_la_init(rig_la_inputs):
     assert np.isclose(rig.travel_per_rad, screw_pitch / (2 * np.pi))
     assert rig.motor_torque == motor_torque
     assert rig.motor_rpm == motor_rpm
-    assert rig.z_I == z_I
-    assert rig.x_I == x_I
 
 
 def test_calc_length_w_one_point(rig_ctc_w_I, point_w_length):

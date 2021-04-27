@@ -17,13 +17,10 @@ def rig_ctc_inputs():
     motor_torque = 40 * 12
     motor_rpm = 70
 
-    z_I = 400
-    x_I = 300
-
     return (rod_mount, motor_point,
             motor_angle, motor_torque, motor_rpm,
             ctc_length, rest_angle, total_rotation,
-            'ctc', z_I, x_I)
+            'ctc')
 
 
 @pytest.fixture
@@ -37,13 +34,10 @@ def rig_la_inputs():
     travel = 8
     screw_pitch = 5 / 25.4
 
-    z_I = 400
-    x_I = 300
-
     return (rod_mount, motor_point,
             motor_torque, motor_rpm,
             travel, screw_pitch,
-            'linear', z_I, x_I)
+            'linear')
 
 
 @pytest.fixture
@@ -51,12 +45,12 @@ def rig_ctc_w_I(rig_ctc_inputs):
     (rod_mount, motor_point,
      motor_angle, motor_torque, motor_rpm,
      ctc_length, ctc_rest_angle, ctc_total_rotation,
-     drive, z_I, x_I) = rig_ctc_inputs
+     drive) = rig_ctc_inputs
 
     rig = Rig(rod_mount, motor_point,
               motor_angle=motor_angle, motor_torque=motor_torque, motor_rpm=motor_rpm,
               ctc_length=ctc_length, ctc_neutral_angle=ctc_rest_angle, ctc_total_rotation=ctc_total_rotation,
-              drive=drive, z_I=z_I, x_I=x_I)
+              drive=drive)
 
     return rig
 
@@ -66,12 +60,12 @@ def rig_la_w_I(rig_la_inputs):
     (rod_mount, motor_point,
      motor_torque, motor_rpm,
      travel, screw_pitch,
-     drive, z_I, x_I) = rig_la_inputs
+     drive) = rig_la_inputs
 
     rig = Rig(rod_mount, motor_point,
               motor_torque=motor_torque, motor_rpm=motor_rpm,
               linear_travel=travel, screw_pitch=screw_pitch,
-              drive=drive, z_I=z_I, x_I=x_I)
+              drive=drive)
 
     return rig
 

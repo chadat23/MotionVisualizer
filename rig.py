@@ -1,12 +1,6 @@
 import numpy as np
 from scipy.optimize import fsolve
 
-import matplotlib.pyplot as plt
-from matplotlib.backends.backend_agg import FigureCanvasAgg
-from matplotlib.figure import Figure
-from PIL import Image
-from PIL import ImageQt
-
 CTC = 'ctc'
 LINEAR = 'linear'
 
@@ -15,7 +9,7 @@ class Rig:
     def __init__(self, rod_mount, lower_pivot, motor_angle=0, motor_torque=0, motor_rpm=0,
                  ctc_length=0, ctc_neutral_angle=0, ctc_total_rotation=0,
                  linear_travel=0, screw_pitch=0,
-                 drive='', z_I=-1, x_I=-1):
+                 drive=''):
         self.lower_pivot1 = lower_pivot
         self.lower_pivot2 = np.copy(lower_pivot)
         self.lower_pivot2[2] *= -1
@@ -57,9 +51,6 @@ class Rig:
 
         self.motor_torque = motor_torque
         self.motor_rpm = motor_rpm
-
-        self.z_I = z_I
-        self.x_I = x_I
 
         self.drive = drive
 
@@ -244,39 +235,9 @@ class Rig:
         # print(self.roll_omega)
 
     def calculate(self):
-        def plot(title1, title2, data1, data2):
-            fig = Figure(figsize=(5, 4), dpi=100)
-            canvas = FigureCanvasAgg(fig)
-
-            axs = fig.subplots(2, 1)
-
-            img1 = axs[0].scatter(self.roll, self.pitch, s=50, c=data1)
-            axs[0].set_aspect('equal', 'box')
-            axs[0].set_title(title1, fontsize=10)
-            axs[0].set_xlabel('Degrees of Roll')
-            axs[0].set_ylabel('Degrees of Pitch')
-            fig.colorbar(img1, ax=axs[0])
-
-            img2 = axs[1].scatter(self.roll, self.pitch, s=50, c=data2)
-            axs[1].set_aspect('equal', 'box')
-            axs[1].set_title(title2, fontsize=10)
-            axs[1].set_xlabel('Degrees of Roll')
-            axs[1].set_ylabel('Degrees of Pitch')
-            fig.colorbar(img2, ax=axs[1])
-
-            fig.tight_layout()
-
-            canvas.draw()
-            buf = canvas.buffer_rgba()
-            X = np.asarray(buf)
-            return ImageQt.ImageQt(Image.fromarray(X))
-
         self.calc_performance()
 
         self.get_angles()
-
-        self.torque_plot = plot('Pitch Torque', 'Roll Torque', self.pitch_torque, self.roll_torque)
-        self.omega_plot = plot('Pitch Omega (deg/sec)', 'Roll Omega (deg/sec)', self.pitch_omega, self.roll_omega)
 
     def get_angles(self):
         def rodmount_pushrod_inner_angle(pivot_lower_mount, rodmount, rodmount_lower_mount):
