@@ -32,6 +32,7 @@ class CalcWindow(Widgets.QMainWindow):
         canvas = FigureCanvasAgg(fig)
 
         axs = fig.subplots(2, 1)
+        fig.set_figheight(5)
 
         img1 = axs[0].scatter(self.rig.roll, self.rig.pitch, s=50, c=data1)
         axs[0].set_aspect('equal', 'box')
