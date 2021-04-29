@@ -285,8 +285,8 @@ class Rig:
             if self.drive == CTC:
                 return (pitch2 - pitch1) / (2 * delta), (roll2 - roll1) / (2 * delta)
             elif self.drive == LINEAR:
-                return (pitch2 - pitch1) / (2 * delta / self.travel_per_rad), \
-                       (roll2 - roll1) / (2 * delta / self.travel_per_rad)
+                return ((pitch2 - pitch1) / (2 * delta / self.travel_per_rad),
+                        (roll2 - roll1) / (2 * delta / self.travel_per_rad))
 
         def torques(pitch_ratio, roll_ratio):
             """
@@ -352,8 +352,7 @@ class Rig:
         self.roll = []
 
         last_estimated_points = get_starting_points()
-        # estimated_points = last_estimated_points
-        for i, (position1, position2) in enumerate(grid_points()):
+        for position1, position2 in grid_points():
             if np.isclose(position1, self.pushrod_min_length) or np.isclose(position1, self.ctc_min_angle):
                 estimated_points = last_estimated_points
             else:
