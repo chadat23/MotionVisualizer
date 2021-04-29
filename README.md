@@ -15,7 +15,7 @@ the UI file.
 If images are changed in Qt Designer, in order to have them update in the app, the below code must be run within the 
 virtual environment.
 
-`$ pyside6-rcc main_window.qrc > main_window_rc.py>`
+`$ pyside6-rcc main_window.qrc > main_window_rc.py`
 
 ## Building For Distribution
 

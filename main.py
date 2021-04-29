@@ -9,19 +9,10 @@ from PIL import ImageQt
 import numpy as np
 import PySide6.QtWidgets as Widgets
 from PySide6.QtGui import QPixmap
+# QSizePolicy
 
 from main_window import Ui_MainWindow
 from rig import Rig
-
-
-# pyside6-uic main_window.ui > main_window.py
-# pyside6-rcc main_window.qrc > main_window_rc.py
-
-# pyinstaller --name="MotionVisualizer" --windowed --onefile main.py
-# pyinstaller --name="MotionVisualizer" --windowed main.py --add-data "e:/documents/python/motionvisualizer/venv/lib/site-packages/PySide6/plugins;PySide6/plugins/"
-# pyinstaller --name="MotionVisualizer" --windowed --onefile main.py --add-data "PYTHON_DIRECTORY/lib/site-packages/PySide6/plugins;PySide6/plugins/"
-# pyinstaller --name="MotionVisualizer" --windowed --onefile main.py --add-data "e:/documents/python/motionvisualizer/venv/lib/site-packages/PySide6/plugins;PySide6/plugins/"
-# pyinstaller --name="MotionVisualizer" --windowed --onefile main.py --add-data "venv/lib/site-packages/PySide6/plugins;PySide6/plugins/"
 
 
 class CalcWindow(Widgets.QMainWindow):
@@ -29,6 +20,10 @@ class CalcWindow(Widgets.QMainWindow):
         super().__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+
+        # self.ui.whole_iso_label.set
+        self.ui.whole_iso_label.setScaledContents(True)
+        self.ui.whole_iso_label.setSizePolicy(Widgets.QSizePolicy.Ignored, Widgets.QSizePolicy.Ignored)
 
         self.ui.button_calc_ctc.clicked.connect(self.calculate_ctc)
         self.ui.button_calc_linear.clicked.connect(self.calculate_linear)

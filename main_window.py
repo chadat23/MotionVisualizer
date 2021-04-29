@@ -18,38 +18,48 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1145, 622)
+        MainWindow.resize(1145, 734)
+        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(50)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(MainWindow.sizePolicy().hasHeightForWidth())
+        MainWindow.setSizePolicy(sizePolicy)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.tabs = QTabWidget(self.centralwidget)
         self.tabs.setObjectName(u"tabs")
-        self.tabs.setGeometry(QRect(10, 10, 671, 541))
+        self.tabs.setGeometry(QRect(10, 10, 661, 681))
         self.tab = QWidget()
         self.tab.setObjectName(u"tab")
-        self.label = QLabel(self.tab)
-        self.label.setObjectName(u"label")
-        self.label.setGeometry(QRect(10, 10, 651, 501))
-        self.label.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignTop)
+        self.whole_iso_label = QLabel(self.tab)
+        self.whole_iso_label.setObjectName(u"whole_iso_label")
+        self.whole_iso_label.setGeometry(QRect(0, 0, 650, 650))
+        sizePolicy1 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Maximum)
+        sizePolicy1.setHorizontalStretch(0)
+        sizePolicy1.setVerticalStretch(0)
+        sizePolicy1.setHeightForWidth(self.whole_iso_label.sizePolicy().hasHeightForWidth())
+        self.whole_iso_label.setSizePolicy(sizePolicy1)
+        self.whole_iso_label.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignTop)
         self.tabs.addTab(self.tab, "")
         self.tab_2 = QWidget()
         self.tab_2.setObjectName(u"tab_2")
         self.label_2 = QLabel(self.tab_2)
         self.label_2.setObjectName(u"label_2")
-        self.label_2.setGeometry(QRect(10, 10, 301, 201))
+        self.label_2.setGeometry(QRect(0, 0, 650, 650))
         self.label_2.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignTop)
         self.tabs.addTab(self.tab_2, "")
         self.tab_4 = QWidget()
         self.tab_4.setObjectName(u"tab_4")
         self.label_4 = QLabel(self.tab_4)
         self.label_4.setObjectName(u"label_4")
-        self.label_4.setGeometry(QRect(10, 10, 371, 281))
+        self.label_4.setGeometry(QRect(0, 0, 650, 650))
         self.label_4.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignTop)
         self.tabs.addTab(self.tab_4, "")
         self.tab_3 = QWidget()
         self.tab_3.setObjectName(u"tab_3")
         self.textBrowser = QTextBrowser(self.tab_3)
         self.textBrowser.setObjectName(u"textBrowser")
-        self.textBrowser.setGeometry(QRect(10, 10, 651, 491))
+        self.textBrowser.setGeometry(QRect(0, 0, 650, 650))
         self.tabs.addTab(self.tab_3, "")
         self.torque_tab = QWidget()
         self.torque_tab.setObjectName(u"torque_tab")
@@ -322,11 +332,11 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
-        self.label.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><img src=\":/images/images/whole_isometric.jpg\"/></p></body></html>", None))
+        self.whole_iso_label.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><img src=\":/images/images/whole_isometric.png\"/></p></body></html>", None))
         self.tabs.setTabText(self.tabs.indexOf(self.tab), QCoreApplication.translate("MainWindow", u"Iso Views", None))
-        self.label_2.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.label_2.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><img src=\":/images/images/front_view.png\"/></p></body></html>", None))
         self.tabs.setTabText(self.tabs.indexOf(self.tab_2), QCoreApplication.translate("MainWindow", u"Front Views", None))
-        self.label_4.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.label_4.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><img src=\":/images/images/top_view.png\"/></p></body></html>", None))
         self.tabs.setTabText(self.tabs.indexOf(self.tab_4), QCoreApplication.translate("MainWindow", u"Top Views", None))
         self.textBrowser.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
@@ -336,39 +346,39 @@ class Ui_MainWindow(object):
 "<ul style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;\"><li style=\"\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">There could be edge cases that weren't tested. </span></li>\n"
 "<li style=\" font-size:10pt;\" style=\" margin-top:0px; margin-bottom"
                         ":0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">If the input geometry goes into distinctly atypical configurations (such as the ctc and pushrod going past being aligned) the resulting calculations shouldn't be trusted.</li>\n"
-"<li style=\" font-size:10pt;\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Given the nature of how the tool works, all calculations are estimates (that are hopefully acurate to several decimal places).</li>\n"
+"<li style=\" font-size:10pt;\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Given the nature of how the tool works, all calculations are estimates (that are hopefully accurate to several decimal places).</li>\n"
 "<li style=\" font-size:10pt;\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">There could be unknown mistakes.</li></ul>\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">This program is slow, it's normal for it to take 1 or 2 seconds to run.</span></p>\n"
-"<p style=\" margin-top:12px; margin-botto"
-                        "m:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Take note of the softwares notation and nomenclature. Similar software may look and work similarly but may differ in important ways.</span></p>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">In order to allow more flexible use, neither distance nore force units are assumed. Ensure that the input motor torque is converted appropreately so that it's units of length and force match what's used or desired elsewhere.</span></p>\n"
+"<p style=\" margin-top:12px; margin-bott"
+                        "om:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Take note of the software's notation and nomenclature. Similar software may look and work similarly but may differ in important ways.</span></p>\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">In order to allow more flexible use, neither distance nor force units are assumed. Ensure that the input motor torque is converted appropriately so that it's units of length and force match what's used or desired elsewhere.</span></p>\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Inputs **********************************************************************************************</span></p>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block"
-                        "-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Rod Mount Position: where the pushrods attach to the seat platform.</span></p>\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-bloc"
+                        "k-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Rod Mount Position: where the pushrods attach to the seat platform. Measured with respect to the under rocker platform pivot.</span></p>\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">CTC Designs:</span></p>\n"
-"<ul style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;\"><li style=\"\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Motor Mount Position: the point about which the CTC rotates.</span></li>\n"
-"<li style=\" font-size:10pt;\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Motor Angle: the angle between the CTC and the chassis longnatudinal centerline.</li>\n"
-"<li style=\" font-size:10pt;\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:"
-                        "0px; -qt-block-indent:0; text-indent:0px;\">CTC Length: the distance between the motor pivot point and the Push Rod Mount point.</li>\n"
+"<ul style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;\"><li style=\"\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Motor Mount Position: the point about which the CTC rotates. Measured from the main rocker platform pivot.</span></li>\n"
+"<li style=\" font-size:10pt;\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Motor Angle: the angle between the CTC and the chassis longitudinal centerline.</li>\n"
+"<"
+                        "li style=\" font-size:10pt;\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">CTC Length: the distance between the motor pivot point and the Push Rod Mount point.</li>\n"
 "<li style=\" font-size:10pt;\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Neutral Angle: the nominal angle of the CTC above the horizontal.</li>\n"
 "<li style=\" font-size:10pt;\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Total Rotation: the total amount that the CTC rotates (a value of 45 means that it moves 22.5 degrees in either direction from the nominal position).</li></ul>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Linear Actuater Designs:</span></p>\n"
-"<ul style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;\"><li style=\"\" style=\" margin-top:12px; margi"
-                        "n-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Travel: the total travel of the linear actuater (a value of 6 means that it moves 3 units in either direction from the nominal position).</span></li>\n"
-"<li style=\" font-size:10pt;\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Pitch: the pitch of the screw used in the actuater.</li>\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Linear Actuator Designs:</span></p>\n"
+"<ul style=\"margin-top: 0px; margin-bottom: 0px; m"
+                        "argin-left: 0px; margin-right: 0px; -qt-list-indent: 1;\"><li style=\"\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Travel: the total travel of the linear actuator (a value of 6 means that it moves 3 units in either direction from the nominal position).</span></li>\n"
+"<li style=\" font-size:10pt;\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Pitch: the pitch of the screw used in the actuator.</li>\n"
 "<li style=\" font-size:10pt;\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">It's assumed that there's 1:1 gearing between the motor/gearbox output and the screw and that if there's a gearbox, the input torque and RPM is for the gearbox output.</li>\n"
-"<li style=\" font-size:10pt;\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Min &amp; Max CTC Pushrod Angle should never be allowed to toggle"
-                        ", go past 0.</li></ul>\n"
+"<li style=\" font-size:10pt;\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; "
+                        "-qt-block-indent:0; text-indent:0px;\">Min &amp; Max CTC Pushrod Angle should never be allowed to toggle, go past 0.</li></ul>\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Motor Max Torque: an individual motor's max torque with distance units that match what's used elsewhere and force units that are desired in the output plots.</span></p>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Motor Max RPM: the max RPM of the motors (appropreate unit conversions are done internally).</span></p>\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Motor Max RPM: the max RPM of the motors (appropriate unit conversions are done internally).</span></p>\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Outputs ********************************************************************************************</span></p>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span styl"
-                        "e=\" font-size:10pt;\">All plots represent effects of the contributions of both motors.</span></p>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">All plots assume that, at the various plotted points, both motors are working together to either puerly pitch, or roll.</span></p>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">The two plot axes of any given plot have the same scale (but different offsets) so designs with equal amounts of pitch and roll will generate square plots, asymetric designs will generate oblong rhombi.</span></p>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Torque is reported in whatever units are used as force and length.</span></p>\n"
-"<p style=\" margin-"
-                        "top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Omega is angular speed and is reported in units of degrees / second.</span></p>\n"
+"<p style=\" margin-top:12px; "
+                        "margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">All plots represent effects of the contributions of both motors.</span></p>\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">All plots assume that, at the various plotted points, both motors are working together to either purely pitch, or roll.</span></p>\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">The two plot axes of any given plot have the same scale (but different offsets) so designs with equal amounts of pitch and roll will generate square plots, asymmetric designs will generate oblong rhombi.</span></p>\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt"
+                        ";\">Torque is reported in whatever units are used as force and length.</span></p>\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Omega is angular speed and is reported in units of degrees / second.</span></p>\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Min &amp; Max CTC Pushrod Angle should never be allowed to toggle, go past 0.</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;\"><br /></p></body></html>", None))
         self.tabs.setTabText(self.tabs.indexOf(self.tab_3), QCoreApplication.translate("MainWindow", u"Info", None))

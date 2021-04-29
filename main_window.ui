@@ -7,8 +7,14 @@
     <x>0</x>
     <y>0</y>
     <width>1145</width>
-    <height>622</height>
+    <height>734</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+    <horstretch>50</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
@@ -19,8 +25,8 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>671</width>
-      <height>541</height>
+      <width>661</width>
+      <height>681</height>
      </rect>
     </property>
     <property name="currentIndex">
@@ -30,17 +36,23 @@
      <attribute name="title">
       <string>Iso Views</string>
      </attribute>
-     <widget class="QLabel" name="label">
+     <widget class="QLabel" name="whole_iso_label">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>10</y>
-        <width>651</width>
-        <height>501</height>
+        <x>0</x>
+        <y>0</y>
+        <width>650</width>
+        <height>650</height>
        </rect>
       </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/images/images/whole_isometric.jpg&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/images/images/whole_isometric.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -54,14 +66,14 @@
      <widget class="QLabel" name="label_2">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>10</y>
-        <width>301</width>
-        <height>201</height>
+        <x>0</x>
+        <y>0</y>
+        <width>650</width>
+        <height>650</height>
        </rect>
       </property>
       <property name="text">
-       <string>TextLabel</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/images/images/front_view.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -75,14 +87,14 @@
      <widget class="QLabel" name="label_4">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>10</y>
-        <width>371</width>
-        <height>281</height>
+        <x>0</x>
+        <y>0</y>
+        <width>650</width>
+        <height>650</height>
        </rect>
       </property>
       <property name="text">
-       <string>TextLabel</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/images/images/top_view.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -96,10 +108,10 @@
      <widget class="QTextBrowser" name="textBrowser">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>10</y>
-        <width>651</width>
-        <height>491</height>
+        <x>0</x>
+        <y>0</y>
+        <width>650</width>
+        <height>650</height>
        </rect>
       </property>
       <property name="html">
@@ -110,30 +122,30 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;While efforts have been made to test this, there could still be bugs and inaccuracies.&lt;/span&gt;&lt;/p&gt;
 &lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot;&quot; style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;There could be edge cases that weren't tested. &lt;/span&gt;&lt;/li&gt;
 &lt;li style=&quot; font-size:10pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;If the input geometry goes into distinctly atypical configurations (such as the ctc and pushrod going past being aligned) the resulting calculations shouldn't be trusted.&lt;/li&gt;
-&lt;li style=&quot; font-size:10pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Given the nature of how the tool works, all calculations are estimates (that are hopefully acurate to several decimal places).&lt;/li&gt;
+&lt;li style=&quot; font-size:10pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Given the nature of how the tool works, all calculations are estimates (that are hopefully accurate to several decimal places).&lt;/li&gt;
 &lt;li style=&quot; font-size:10pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;There could be unknown mistakes.&lt;/li&gt;&lt;/ul&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;This program is slow, it's normal for it to take 1 or 2 seconds to run.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Take note of the softwares notation and nomenclature. Similar software may look and work similarly but may differ in important ways.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;In order to allow more flexible use, neither distance nore force units are assumed. Ensure that the input motor torque is converted appropreately so that it's units of length and force match what's used or desired elsewhere.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Take note of the software's notation and nomenclature. Similar software may look and work similarly but may differ in important ways.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;In order to allow more flexible use, neither distance nor force units are assumed. Ensure that the input motor torque is converted appropriately so that it's units of length and force match what's used or desired elsewhere.&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Inputs **********************************************************************************************&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Rod Mount Position: where the pushrods attach to the seat platform.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Rod Mount Position: where the pushrods attach to the seat platform. Measured with respect to the under rocker platform pivot.&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;CTC Designs:&lt;/span&gt;&lt;/p&gt;
-&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Motor Mount Position: the point about which the CTC rotates.&lt;/span&gt;&lt;/li&gt;
-&lt;li style=&quot; font-size:10pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Motor Angle: the angle between the CTC and the chassis longnatudinal centerline.&lt;/li&gt;
+&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Motor Mount Position: the point about which the CTC rotates. Measured from the main rocker platform pivot.&lt;/span&gt;&lt;/li&gt;
+&lt;li style=&quot; font-size:10pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Motor Angle: the angle between the CTC and the chassis longitudinal centerline.&lt;/li&gt;
 &lt;li style=&quot; font-size:10pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;CTC Length: the distance between the motor pivot point and the Push Rod Mount point.&lt;/li&gt;
 &lt;li style=&quot; font-size:10pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Neutral Angle: the nominal angle of the CTC above the horizontal.&lt;/li&gt;
 &lt;li style=&quot; font-size:10pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Total Rotation: the total amount that the CTC rotates (a value of 45 means that it moves 22.5 degrees in either direction from the nominal position).&lt;/li&gt;&lt;/ul&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Linear Actuater Designs:&lt;/span&gt;&lt;/p&gt;
-&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot;&quot; style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Travel: the total travel of the linear actuater (a value of 6 means that it moves 3 units in either direction from the nominal position).&lt;/span&gt;&lt;/li&gt;
-&lt;li style=&quot; font-size:10pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Pitch: the pitch of the screw used in the actuater.&lt;/li&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Linear Actuator Designs:&lt;/span&gt;&lt;/p&gt;
+&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot;&quot; style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Travel: the total travel of the linear actuator (a value of 6 means that it moves 3 units in either direction from the nominal position).&lt;/span&gt;&lt;/li&gt;
+&lt;li style=&quot; font-size:10pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Pitch: the pitch of the screw used in the actuator.&lt;/li&gt;
 &lt;li style=&quot; font-size:10pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;It's assumed that there's 1:1 gearing between the motor/gearbox output and the screw and that if there's a gearbox, the input torque and RPM is for the gearbox output.&lt;/li&gt;
 &lt;li style=&quot; font-size:10pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Min &amp;amp; Max CTC Pushrod Angle should never be allowed to toggle, go past 0.&lt;/li&gt;&lt;/ul&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Motor Max Torque: an individual motor's max torque with distance units that match what's used elsewhere and force units that are desired in the output plots.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Motor Max RPM: the max RPM of the motors (appropreate unit conversions are done internally).&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Motor Max RPM: the max RPM of the motors (appropriate unit conversions are done internally).&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Outputs ********************************************************************************************&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;All plots represent effects of the contributions of both motors.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;All plots assume that, at the various plotted points, both motors are working together to either puerly pitch, or roll.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;The two plot axes of any given plot have the same scale (but different offsets) so designs with equal amounts of pitch and roll will generate square plots, asymetric designs will generate oblong rhombi.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;All plots assume that, at the various plotted points, both motors are working together to either purely pitch, or roll.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;The two plot axes of any given plot have the same scale (but different offsets) so designs with equal amounts of pitch and roll will generate square plots, asymmetric designs will generate oblong rhombi.&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Torque is reported in whatever units are used as force and length.&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Omega is angular speed and is reported in units of degrees / second.&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Min &amp;amp; Max CTC Pushrod Angle should never be allowed to toggle, go past 0.&lt;/span&gt;&lt;/p&gt;

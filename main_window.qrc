@@ -1,5 +1,7 @@
 <RCC>
   <qresource prefix="images">
-    <file>images/whole_isometric.jpg</file>
+    <file>images/top_view.png</file>
+    <file>images/front_view.png</file>
+    <file>images/whole_isometric.png</file>
   </qresource>
 </RCC>
