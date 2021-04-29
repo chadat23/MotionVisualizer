@@ -17,6 +17,12 @@ from rig import Rig
 # pyside6-uic main_window.ui > main_window.py
 # pyside6-rcc main_window.qrc > main_window_rc.py
 
+# pyinstaller --name="MotionVisualizer" --windowed --onefile main.py
+# pyinstaller --name="MotionVisualizer" --windowed main.py --add-data "e:/documents/python/motionvisualizer/venv/lib/site-packages/PySide6/plugins;PySide6/plugins/"
+# pyinstaller --name="MotionVisualizer" --windowed --onefile main.py --add-data "PYTHON_DIRECTORY/lib/site-packages/PySide6/plugins;PySide6/plugins/"
+# pyinstaller --name="MotionVisualizer" --windowed --onefile main.py --add-data "e:/documents/python/motionvisualizer/venv/lib/site-packages/PySide6/plugins;PySide6/plugins/"
+# pyinstaller --name="MotionVisualizer" --windowed --onefile main.py --add-data "venv/lib/site-packages/PySide6/plugins;PySide6/plugins/"
+
 
 class CalcWindow(Widgets.QMainWindow):
     def __init__(self):
