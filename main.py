@@ -9,6 +9,7 @@ from PIL import ImageQt
 import numpy as np
 import PySide6.QtWidgets as Widgets
 from PySide6.QtGui import QPixmap
+from PySide6.QtCore import Qt
 # QSizePolicy
 
 from main_window import Ui_MainWindow
@@ -21,15 +22,11 @@ class CalcWindow(Widgets.QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
-        # self.ui.whole_iso_label.set
-        self.ui.whole_iso_label.setScaledContents(True)
-        self.ui.whole_iso_label.setSizePolicy(Widgets.QSizePolicy.Ignored, Widgets.QSizePolicy.Ignored)
-
         self.ui.button_calc_ctc.clicked.connect(self.calculate_ctc)
         self.ui.button_calc_linear.clicked.connect(self.calculate_linear)
 
     def plot(self, title1, title2, data1, data2):
-        fig = Figure(figsize=(5, 4), dpi=100)
+        fig = Figure(figsize=(6, 6), dpi=100)
         canvas = FigureCanvasAgg(fig)
 
         axs = fig.subplots(2, 1)

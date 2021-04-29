@@ -160,14 +160,17 @@ p, li { white-space: pre-wrap; }
      <widget class="QLabel" name="torques_label">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>10</y>
-        <width>651</width>
-        <height>481</height>
+        <x>0</x>
+        <y>0</y>
+        <width>650</width>
+        <height>650</height>
        </rect>
       </property>
       <property name="text">
        <string/>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
       </property>
      </widget>
     </widget>
@@ -178,14 +181,17 @@ p, li { white-space: pre-wrap; }
      <widget class="QLabel" name="omegas_label">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>10</y>
-        <width>651</width>
-        <height>481</height>
+        <x>0</x>
+        <y>0</y>
+        <width>650</width>
+        <height>650</height>
        </rect>
       </property>
       <property name="text">
        <string/>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
       </property>
      </widget>
     </widget>
