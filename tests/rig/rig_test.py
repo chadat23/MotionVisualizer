@@ -98,7 +98,7 @@ def test_calc_rod_mount_locations_ctc(rig_ctc_w_I, ctc_angles_w_rod_mount_locati
 
     rm = rig_ctc_w_I.rod_mount
     points = rm[0], rm[0], rm[1], rm[1], rm[2], -rm[2]
-    actual_point1, actual_point2 = rig_ctc_w_I._calc_rod_mount_locations(ctc_angle1, ctc_angle2, points)
+    actual_point1, actual_point2 = rig_ctc_w_I._calc_rod_mount_points(ctc_angle1, ctc_angle2, points)
 
     assert np.all(np.isclose(expected_point1, actual_point1, atol=1e-3))
     assert np.all(np.isclose(expected_point2, actual_point2, atol=1e-3))
@@ -109,7 +109,7 @@ def test_calc_rod_mount_locations_la(rig_la_w_I, pushrod_lengths_w_mount_locatio
 
     rm = rig_la_w_I.rod_mount
     points = rm[0], rm[0], rm[1], rm[1], rm[2], -rm[2]
-    actual_point1, actual_point2 = rig_la_w_I._calc_rod_mount_locations(pushrod1, pushrod2, points)
+    actual_point1, actual_point2 = rig_la_w_I._calc_rod_mount_points(pushrod1, pushrod2, points)
 
     assert np.all(np.isclose(rod_mount1, actual_point1, atol=1e-3))
     assert np.all(np.isclose(rod_mount2, actual_point2, atol=1e-3))

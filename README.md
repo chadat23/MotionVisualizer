@@ -25,4 +25,5 @@ From within the virtual environment, run the below code to package the app into 
 
 ## Change Log
 ### 0.0.2
-* Added pushrod length to UI output pane
+* Fixed math bug.
+* Added pushrod length to UI output pane.

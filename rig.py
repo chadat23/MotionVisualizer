@@ -86,7 +86,7 @@ class Rig:
 
         return np.array([ctc_x, ctc_y, ctc_z])
 
-    def _calc_rod_mount_locations(self, position1, position2, estimated_locations):
+    def _calc_rod_mount_points(self, position1, position2, estimated_coords):
         """
         Calculates the Rod Mount position.
 
@@ -94,7 +94,7 @@ class Rig:
         mount location.
         :param array[float, float, float] position2: The second CTC or linear actuator
         mount location.
-        :param list[float, float, float, float, float, float] estimated_locations: Estimated
+        :param list[float, float, float, float, float, float] estimated_coords: Estimated
         locations of the two Rod Mount points. The nominal location can be a good option
         if a better one isn't known. It's in the form X1, X2, Y1, Y2, Z1, Z2.
         :return:
@@ -126,7 +126,7 @@ class Rig:
             pushrod1 = position1
             pushrod2 = position2
 
-        x1, x2, y1, y2, z1, z2 = fsolve(equations, estimated_locations,
+        x1, x2, y1, y2, z1, z2 = fsolve(equations, estimated_coords,
                                         (self.rod_mount_length,
                                          pushrod1,
                                          pushrod2,
@@ -160,6 +160,12 @@ class Rig:
 
         return pitch, roll
 
+    @staticmethod
+    def _convert_points_to_coords(point1, point2):
+        x1, y1, z1 = point1
+        x2, y2, z2 = point2
+        return x1, x2, y1, y2, z1, z2
+
     def _calc_performance(self):
         """
         Calculates the performance metrics of the sim rig.
@@ -179,7 +185,7 @@ class Rig:
         :return: None
         """
 
-        def get_starting_points():
+        def get_starting_coords():
             """
             Gets estimated locations of the Rod Mounts at an extreme point.
 
@@ -194,20 +200,22 @@ class Rig:
             """
 
             rm = self.rod_mount
-            estimated_points = rm[0], rm[0], rm[1], rm[1], rm[2], -rm[2]
+            estimated_coords = rm[0], rm[0], rm[1], rm[1], rm[2], -rm[2]
 
             if self.drive == CTC:
                 for angle in np.arange(self.ctc_neutral_angle,
                                        self.ctc_min_angle - self.grid_spacing / 2,
                                        -self.grid_spacing):
-                    estimated_points = self._calc_rod_mount_locations(angle, angle, estimated_points)
+                    points1, points2 = self._calc_rod_mount_points(angle, angle, estimated_coords)
+                    estimated_coords = self._convert_points_to_coords(points1, points2)
             elif self.drive == LINEAR:
                 for length in np.arange(self.pushrod_nominal_length,
                                         self.pushrod_min_length - self.grid_spacing / 2,
                                         -self.grid_spacing):
-                    estimated_points = self._calc_rod_mount_locations(length, length, estimated_points)
+                    points1, points2 = self._calc_rod_mount_points(length, length, estimated_coords)
+                    estimated_coords = self._convert_points_to_coords(points1, points2)
 
-            return estimated_points
+            return estimated_coords
 
         if self.drive == CTC:
             """
@@ -254,7 +262,7 @@ class Rig:
                                                      self.grid_spacing):
                         yield pushrod1_length, pushrod2_length
 
-        def numerical_derivative(position1_t0, position2_t0, position1_t1, position2_t1, estimated_points):
+        def numerical_derivative(position1_t0, position2_t0, position1_t1, position2_t1, estimated_coords):
             """
             Estimates the numerical derivative of pitch and roll as a function
             of either CTC angle or linear actuator length.
@@ -269,15 +277,15 @@ class Rig:
             linear actuator position of the respective value on the positive Z side.
             :param float position2_t1: The ending point of either the CTC angle or
             linear actuator position of the respective value on the negative Z side.
-            :param tuple[X1, X2, Y1, Y2, Z1, Z2] estimated_points: The estimates
+            :param tuple[X1, X2, Y1, Y2, Z1, Z2] estimated_coords: The estimates
             locations of the points, the last solved set of locations can be a good
             estimate
 
             :return: The effective gear ratio as a tuple of floats representing
             the pitch and roll ratios.
             """
-            rod_mount1_t0, rod_mount2_t0 = self._calc_rod_mount_locations(position1_t0, position2_t0, estimated_points)
-            rod_mount1_t1, rod_mount2_t1 = self._calc_rod_mount_locations(position1_t1, position2_t1, estimated_points)
+            rod_mount1_t0, rod_mount2_t0 = self._calc_rod_mount_points(position1_t0, position2_t0, estimated_coords)
+            rod_mount1_t1, rod_mount2_t1 = self._calc_rod_mount_points(position1_t1, position2_t1, estimated_coords)
 
             pitch1, roll1 = self._calc_pitch_and_roll(rod_mount1_t0, rod_mount2_t0)
             pitch2, roll2 = self._calc_pitch_and_roll(rod_mount1_t1, rod_mount2_t1)
@@ -321,7 +329,7 @@ class Rig:
 
             return pitch, roll
 
-        def angles(position1, position2, estimated_points):
+        def angles(position1, position2, estimated_coords):
             """
             Calculates the pitch and roll angles.
 
@@ -335,12 +343,12 @@ class Rig:
             with a positive Z value.
             :param float position2: The position of the CTC angle or Linear Actuator Length
             with a negative Z value.
-            :param tuple[X1, X2, Y1, Y2, Z1, Z2] estimated_points: The estimated locations
+            :param tuple[X1, X2, Y1, Y2, Z1, Z2] estimated_coords: The estimated locations
             of the rod mount points.
             :return: A tuple of floats containing the pitch and roll.
             """
 
-            rod_mount1, rod_mount2 = self._calc_rod_mount_locations(position1, position2, estimated_points)
+            rod_mount1, rod_mount2 = self._calc_rod_mount_points(position1, position2, estimated_coords)
 
             return self._calc_pitch_and_roll(rod_mount1, rod_mount2)
 
@@ -351,25 +359,27 @@ class Rig:
         self.pitch = []
         self.roll = []
 
-        last_estimated_points = get_starting_points()
+        last_estimated_coords = get_starting_coords()
         for position1, position2 in grid_points():
             if np.isclose(position1, self.pushrod_min_length) or np.isclose(position1, self.ctc_min_angle):
-                estimated_points = last_estimated_points
+                estimated_coords = last_estimated_coords
             else:
-                estimated_points = self._calc_rod_mount_locations(position1, position2, last_estimated_points)
+                estimated_points = self._calc_rod_mount_points(position1, position2, last_estimated_coords)
+                estimated_coords = self._convert_points_to_coords(*estimated_points)
+
             pitch_ratio, _ = numerical_derivative(position1 - delta,
                                                   position2 - delta,
                                                   position1 + delta,
                                                   position2 + delta,
-                                                  estimated_points)
+                                                  estimated_coords)
             _, roll_ratio = numerical_derivative(position1 - delta,
                                                  position2 + delta,
                                                  position1 + delta,
                                                  position2 - delta,
-                                                 estimated_points)
+                                                 estimated_coords)
             pitch_torque, roll_torque = torques(pitch_ratio, roll_ratio)
             pitch_omega, roll_omega = omegas(pitch_ratio, roll_ratio)
-            pitch, roll = angles(position1, position2, estimated_points)
+            pitch, roll = angles(position1, position2, estimated_coords)
 
             self.pitch.append(np.degrees(pitch - self.rod_mount_base_angle))
             self.roll.append(np.degrees(roll))
@@ -460,13 +470,13 @@ class Rig:
             estimated_points = rm[0], rm[0], rm[1], rm[1], rm[2], -rm[2]
 
             ctc_location1 = self._calc_ctc_location(self.lower_pivot1, self.motor1_angle, self.ctc_max_angle)
-            rodmount_point1, _ = self._calc_rod_mount_locations(self.ctc_max_angle, self.ctc_max_angle, estimated_points)
+            rodmount_point1, _ = self._calc_rod_mount_points(self.ctc_max_angle, self.ctc_max_angle, estimated_points)
             pushrod_angle1 = np.arctan((rodmount_point1[1] - ctc_location1[1]) /
                                        (rodmount_point1[0] - ctc_location1[0])) + np.pi
             self.max_ctc_pushrod_angle = np.degrees(pushrod_angle1 - self.ctc_max_angle)
 
             ctc_location2 = self._calc_ctc_location(self.lower_pivot1, self.motor1_angle, self.ctc_min_angle)
-            rodmount_point2, _ = self._calc_rod_mount_locations(self.ctc_min_angle, self.ctc_min_angle, estimated_points)
+            rodmount_point2, _ = self._calc_rod_mount_points(self.ctc_min_angle, self.ctc_min_angle, estimated_points)
             pushrod_angle2 = np.arctan((rodmount_point2[1] - ctc_location2[1]) /
                                        (rodmount_point2[0] - ctc_location2[0]))
             self.min_ctc_pushrod_angle = np.degrees(self.ctc_min_angle - pushrod_angle2)
