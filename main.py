@@ -78,6 +78,7 @@ class CalcWindow(Widgets.QMainWindow):
         self.ui.zx_rodmount_angle_ctc.setText(str(round(self.rig.zx_rodmount_angle_ctc, 2)))
         self.ui.zx_pushrod_angle_ctc.setText(str(round(self.rig.zx_pushrod_angle_ctc, 2)))
         self.ui.xy_rodmount_pushrod_angle_ctc.setText(str(round(self.rig.xy_rodmount_pushrod_angle_ctc, 2)))
+        self.ui.pushrod_length_ctc.setText(str(round(self.rig.pushrod_length, 2)))
         self.ui.max_ctc_pushrod_angle.setText(str(round(self.rig.max_ctc_pushrod_angle, 2)))
         self.ui.min_ctc_pushrod_angle.setText(str(round(self.rig.min_ctc_pushrod_angle, 2)))
 
@@ -104,6 +105,7 @@ class CalcWindow(Widgets.QMainWindow):
         self.ui.zx_rodmount_angle_linear.setText(str(round(self.rig.zx_rodmount_angle_linear, 2)))
         self.ui.zx_pushrod_angle_linear.setText(str(round(self.rig.zx_pushrod_angle_linear, 2)))
         self.ui.xy_rodmount_pushrod_angle_linear.setText(str(round(self.rig.xy_rodmount_pushrod_angle_linear, 2)))
+        self.ui.nominal_pushrod_length_linear.setText(str(round(self.rig.pushrod_nominal_length, 2)))
 
 
 def run():

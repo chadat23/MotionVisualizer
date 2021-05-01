@@ -22,3 +22,7 @@ virtual environment.
 From within the virtual environment, run the below code to package the app into a single-file standalone executable:
 
 `$ pyinstaller --name="MotionVisualizer" --windowed --onefile main.py --add-data "venv/lib/site-packages/PySide6/plugins;PySide6/plugins/`
+
+## Change Log
+### 0.0.2
+* Added pushrod length to UI output pane

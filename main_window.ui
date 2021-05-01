@@ -759,6 +759,35 @@ p, li { white-space: pre-wrap; }
         <string/>
        </property>
       </widget>
+      <widget class="QLabel" name="label_46">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>120</y>
+         <width>141</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Pushrod Length</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="pushrod_length_ctc">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>170</x>
+         <y>120</y>
+         <width>61</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
      </widget>
     </widget>
     <widget class="QWidget" name="la_tab">
@@ -1187,6 +1216,35 @@ p, li { white-space: pre-wrap; }
        </property>
        <property name="text">
         <string/>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="nominal_pushrod_length_linear">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>170</x>
+         <y>120</y>
+         <width>61</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_47">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>120</y>
+         <width>141</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Nominal Pushrod Length</string>
        </property>
       </widget>
      </widget>
