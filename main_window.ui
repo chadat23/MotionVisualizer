@@ -220,7 +220,7 @@ p, li { white-space: pre-wrap; }
        </font>
       </property>
       <property name="text">
-       <string>This is only meaningfull if accurate values are entered for &quot;I Pitch&quot; and &quot;I Roll&quot;</string>
+       <string>This is only meaningfully populates if accurate values are entered for &quot;I Pitch&quot; and &quot;I Roll&quot;</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -246,7 +246,7 @@ p, li { white-space: pre-wrap; }
        </font>
       </property>
       <property name="text">
-       <string>This is only meaningfull if accurate values are entered for &quot;I Pitch&quot; and &quot;I Roll&quot;</string>
+       <string>This is only meaningfully populates if accurate values are entered for &quot;I Pitch&quot; and &quot;I Roll&quot;</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -272,7 +272,7 @@ p, li { white-space: pre-wrap; }
        </font>
       </property>
       <property name="text">
-       <string>This is only meaningfull if accurate values are entered for &quot;I Pitch&quot; and &quot;I Roll&quot;</string>
+       <string>This is only meaningfully populates if accurate values are entered for &quot;I Pitch&quot; and &quot;I Roll&quot;</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
