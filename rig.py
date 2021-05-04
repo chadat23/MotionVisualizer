@@ -8,13 +8,14 @@ LINEAR = 'linear'
 class Rig:
     def __init__(self, rod_mount, lower_pivot, motor_angle=0, motor_torque=0, motor_rpm=0,
                  ctc_length=0, ctc_neutral_angle=0, ctc_total_rotation=0,
-                 linear_travel=0, screw_pitch=0,
+                 linear_travel=0, screw_pitch=0, i_pitch=0, i_roll=0,
+                 pitch_linear_rad=0, roll_linear_rad=0,
                  drive=''):
         self.lower_pivot1 = lower_pivot
         self.lower_pivot2 = np.copy(lower_pivot)
         self.lower_pivot2[2] *= -1
 
-        plot_steps = 15
+        plot_steps = 16  # must be even for max speed to be calculated
         if drive == CTC:
             self.motor1_angle = np.radians(motor_angle)
             self.motor2_angle = -np.radians(motor_angle)
@@ -51,6 +52,12 @@ class Rig:
 
         self.motor_torque = motor_torque
         self.motor_rpm = motor_rpm
+
+        self.i_pitch = i_pitch
+        self.i_roll = i_roll
+
+        self.pitch_linear_rad = pitch_linear_rad
+        self.roll_linear_rad = roll_linear_rad
 
         self.drive = drive
 
@@ -356,8 +363,14 @@ class Rig:
         self.roll_torque = []
         self.pitch_omega = []
         self.roll_omega = []
+        self.pitch_alpha = []
+        self.roll_alpha = []
         self.pitch = []
         self.roll = []
+        self.pitch_linear_speed = []
+        self.roll_linear_speed = []
+        self.pitch_linear_acc = []
+        self.roll_linear_acc = []
 
         last_estimated_coords = get_starting_coords()
         for position1, position2 in grid_points():
@@ -387,6 +400,15 @@ class Rig:
             self.roll_torque.append(roll_torque)
             self.pitch_omega.append(pitch_omega)
             self.roll_omega.append(roll_omega)
+            self.pitch_alpha.append(np.degrees(pitch_torque / self.i_pitch))
+            self.roll_alpha.append(np.degrees(roll_torque / self.i_roll))
+            self.pitch_linear_acc.append(pitch_torque / self.i_pitch * self.pitch_linear_rad)
+            self.roll_linear_acc.append(roll_torque / self.i_roll * self.roll_linear_rad)
+            self.pitch_linear_speed.append(np.radians(pitch_omega) * self.pitch_linear_rad)
+            self.roll_linear_speed.append(np.radians(roll_omega) * self.roll_linear_rad)
+
+            if np.isclose(0, pitch - self.rod_mount_base_angle) and np.isclose(0, roll):
+                self.median_pitch_and_roll_torques = (pitch_torque, roll_torque)
 
         # print(self.pitch)
         # print(self.roll)
@@ -430,6 +452,8 @@ class Rig:
         self._calc_performance()
 
         self._get_angles()
+
+        self._get_max_speeds()
 
     def _get_angles(self):
         """
@@ -491,3 +515,19 @@ class Rig:
             rodmount = self.rod_mount_length
             pushrod = self.pushrod_nominal_length
             self.xy_rodmount_pushrod_angle_linear = rodmount_pushrod_inner_angle(pivot_ctc, rodmount, pushrod)
+
+    def _get_max_speeds(self):
+
+        def max_speed(angle, torque, inertia):
+            acceleration = torque / inertia
+            t = (angle * 2 / acceleration) ** 0.5
+            return acceleration * t
+
+        try:
+            pitch_torque, roll_torque = self.median_pitch_and_roll_torques
+
+            self.max_pitch_speed = max_speed(max(self.pitch) * 2, pitch_torque, self.i_pitch)
+            self.max_roll_speed = max_speed(max(self.roll) * 2, roll_torque, self.i_roll)
+        except:
+            self.max_pitch_speed = -1
+            self.max_roll_speed = -1

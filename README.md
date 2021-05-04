@@ -26,4 +26,11 @@ From within the virtual environment, run the below code to package the app into 
 ## Change Log
 ### 0.0.2
 * Fixed math bug.
-* Added pushrod length to UI output pane.
+* Added inertia to inputs.
+* Added max angular speeds to outputs.
+* Added Alphas tab.  
+* Added pushrod length to outputs.
+* Fixed plot labels.
+* Added inspection radii to inputs.
+* Added linear speed and acc. tabs.
+* Updated Info tab.

@@ -53,6 +53,22 @@ class CalcWindow(Widgets.QMainWindow):
         X = np.asarray(buf)
         return ImageQt.ImageQt(Image.fromarray(X))
 
+    def make_plots(self):
+        torque_plot = self.plot('Pitch Torque', 'Roll Torque', self.rig.pitch_torque, self.rig.roll_torque)
+        omega_plot = self.plot('Pitch Torque', 'Roll Torque', self.rig.pitch_omega, self.rig.roll_omega)
+        alpha_plot = self.plot('Pitch Alpha', 'Roll Alpha', self.rig.pitch_alpha, self.rig.roll_alpha)
+        acc_plot = self.plot('Pitch Acceleration', 'Roll Acceleration',
+                             self.rig.pitch_linear_acc, self.rig.roll_linear_acc)
+        speed_plot = self.plot('Pitch Speed', 'Roll Speed', self.rig.pitch_linear_speed, self.rig.roll_linear_speed)
+        self.ui.torques_label.setPixmap(QPixmap.fromImage(torque_plot))
+        self.ui.omegas_label.setPixmap(QPixmap.fromImage(omega_plot))
+
+        if (float(self.ui.i_pitch_ctc.text()) > 0 or float(self.ui.i_roll_ctc.text()) > 0 or
+            float(self.ui.i_pitch_linear.text()) > 0 or float(self.ui.i_roll_linear.text()) > 0):
+            self.ui.alphas_label.setPixmap(QPixmap.fromImage(alpha_plot))
+            self.ui.linear_acc_label.setPixmap(QPixmap.fromImage(acc_plot))
+            self.ui.linear_speed_label.setPixmap(QPixmap.fromImage(speed_plot))
+
     def calculate_ctc(self):
         self.rig = Rig(np.array([float(self.ui.rod_mount_x_ctc.text()),
                                  float(self.ui.rod_mount_y_ctc.text()),
@@ -66,14 +82,15 @@ class CalcWindow(Widgets.QMainWindow):
                        ctc_length=float(self.ui.ctc_length.text()),
                        ctc_neutral_angle=float(self.ui.ctc_neutral_angle.text()),
                        ctc_total_rotation=float(self.ui.ctc_rotation.text()),
+                       i_pitch=float(self.ui.i_pitch_ctc.text()),
+                       i_roll=float(self.ui.i_roll_ctc.text()),
+                       pitch_linear_rad=float(self.ui.pitch_linear_rad_ctc.text()),
+                       roll_linear_rad=float(self.ui.roll_linear_rad_ctc.text()),
                        drive='ctc')
 
         self.rig.calculate()
 
-        torque_plot = self.plot('Pitch Torque', 'Roll Torque', self.rig.pitch_torque, self.rig.roll_torque)
-        omega_plot = self.plot('Pitch Torque', 'Roll Torque', self.rig.pitch_omega, self.rig.roll_omega)
-        self.ui.torques_label.setPixmap(QPixmap.fromImage(torque_plot))
-        self.ui.omegas_label.setPixmap(QPixmap.fromImage(omega_plot))
+        self.make_plots()
 
         self.ui.zx_rodmount_angle_ctc.setText(str(round(self.rig.zx_rodmount_angle_ctc, 2)))
         self.ui.zx_pushrod_angle_ctc.setText(str(round(self.rig.zx_pushrod_angle_ctc, 2)))
@@ -81,6 +98,8 @@ class CalcWindow(Widgets.QMainWindow):
         self.ui.pushrod_length_ctc.setText(str(round(self.rig.pushrod_length, 2)))
         self.ui.max_ctc_pushrod_angle.setText(str(round(self.rig.max_ctc_pushrod_angle, 2)))
         self.ui.min_ctc_pushrod_angle.setText(str(round(self.rig.min_ctc_pushrod_angle, 2)))
+        self.ui.max_pitch_omega_ctc.setText(str(round(self.rig.max_pitch_speed, 2)))
+        self.ui.max_roll_omega_ctc.setText(str(round(self.rig.max_roll_speed, 2)))
 
     def calculate_linear(self):
         self.rig = Rig(np.array([float(self.ui.rod_mount_x_linear.text()),
@@ -93,19 +112,22 @@ class CalcWindow(Widgets.QMainWindow):
                        motor_rpm=float(self.ui.motor_rpm_linear.text()),
                        linear_travel=float(self.ui.linear_travel.text()),
                        screw_pitch=float(self.ui.screw_pitch.text()),
+                       i_pitch=float(self.ui.i_pitch_linear.text()),
+                       i_roll=float(self.ui.i_roll_linear.text()),
+                       pitch_linear_rad=float(self.ui.pitch_linear_rad_linear.text()),
+                       roll_linear_rad=float(self.ui.roll_linear_rad_linear.text()),
                        drive='linear')
 
         self.rig.calculate()
 
-        torque_plot = self.plot('Pitch Torque', 'Roll Torque', self.rig.pitch_torque, self.rig.roll_torque)
-        omega_plot = self.plot('Pitch Torque', 'Roll Torque', self.rig.pitch_omega, self.rig.roll_omega)
-        self.ui.torques_label.setPixmap(QPixmap.fromImage(torque_plot))
-        self.ui.omegas_label.setPixmap(QPixmap.fromImage(omega_plot))
+        self.make_plots()
 
         self.ui.zx_rodmount_angle_linear.setText(str(round(self.rig.zx_rodmount_angle_linear, 2)))
         self.ui.zx_pushrod_angle_linear.setText(str(round(self.rig.zx_pushrod_angle_linear, 2)))
         self.ui.xy_rodmount_pushrod_angle_linear.setText(str(round(self.rig.xy_rodmount_pushrod_angle_linear, 2)))
         self.ui.nominal_pushrod_length_linear.setText(str(round(self.rig.pushrod_nominal_length, 2)))
+        self.ui.max_pitch_omega_linear.setText(str(round(self.rig.max_pitch_speed, 2)))
+        self.ui.max_roll_omega_linear.setText(str(round(self.rig.max_roll_speed, 2)))
 
 
 def run():
