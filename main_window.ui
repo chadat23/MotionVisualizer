@@ -17,10 +17,10 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>MotionVisualizer</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QTabWidget" name="speed_tab">
+   <widget class="QTabWidget" name="outputs_tab">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -155,7 +155,9 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Alpha is angular acceleration and is reported in units of degrees / second squared.&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Min &amp;amp; Max CTC Pushrod Angle should never be allowed to toggle, go past 0.&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Max Pitch and Roll Omega are the max achievable speed if accelerated with the max torqu through all of the pitch or roll range of motion. Uses a constant torque equal to that of the torque when pitch and roll positions are both 0 degrees. Represents the max possible values.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Since pitch and roll omega plots represent the speed at that position given the motors' input RPM, if the value is higher than the &amp;quot;Max Pitch Omega&amp;quot; or &amp;quot;Max Roll Omega&amp;quot; respectively, then that the plotted speed is unachivable so it may make sense to change geometry so that lower omegas but higher alphas are plotted.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Since pitch and roll omega plots represent the speed at that position given the motors' input RPM, if the value is higher than the &amp;quot;Max Pitch Omega&amp;quot; or &amp;quot;Max Roll Omega&amp;quot; respectively, then that the plotted speed is unachivable so it may make sense to change geometry so that lower omegas but higher alphas are plotted.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;When Saving, inputs from both tabs are saved.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;When Opening, the generated plots and outputs are for the inputs tab that was active when the file was Saved.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
      </widget>
     </widget>
@@ -296,7 +298,7 @@ p, li { white-space: pre-wrap; }
      <attribute name="title">
       <string>CTC Based</string>
      </attribute>
-     <widget class="QGroupBox" name="groupBox">
+     <widget class="QGroupBox" name="inputs_group_ctc">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -1066,7 +1068,7 @@ p, li { white-space: pre-wrap; }
      <attribute name="title">
       <string>Linear Actuator</string>
      </attribute>
-     <widget class="QGroupBox" name="groupBox_8">
+     <widget class="QGroupBox" name="inputs_group_linear">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -1733,8 +1735,26 @@ p, li { white-space: pre-wrap; }
      <height>22</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionSave"/>
+    <addaction name="actionOpen"/>
+   </widget>
+   <addaction name="menuFile"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionSave">
+   <property name="text">
+    <string>Save</string>
+   </property>
+  </action>
+  <action name="actionOpen">
+   <property name="text">
+    <string>Open</string>
+   </property>
+  </action>
  </widget>
  <resources>
   <include location="main_window.qrc"/>

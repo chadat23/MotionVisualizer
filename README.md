@@ -34,3 +34,4 @@ From within the virtual environment, run the below code to package the app into 
 * Added inspection radii to inputs.
 * Added linear speed and acc. tabs.
 * Updated Info tab.
+* Added Save and Open functionality.

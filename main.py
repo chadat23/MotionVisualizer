@@ -10,7 +10,8 @@ import numpy as np
 import PySide6.QtWidgets as Widgets
 from PySide6.QtGui import QPixmap
 from PySide6.QtCore import Qt
-# QSizePolicy
+
+import json
 
 from main_window import Ui_MainWindow
 from rig import Rig
@@ -24,6 +25,96 @@ class CalcWindow(Widgets.QMainWindow):
 
         self.ui.button_calc_ctc.clicked.connect(self.calculate_ctc)
         self.ui.button_calc_linear.clicked.connect(self.calculate_linear)
+
+        self.ui.actionSave.triggered.connect(self.save)
+        self.ui.actionOpen.triggered.connect(self.open)
+
+    def save(self):
+        file = Widgets.QFileDialog.getSaveFileName(parent=self, caption='Save File',
+                                                   filter='MotionVisualizer Files (*.mv)')
+
+        info = {'rod_mount_x_ctc': str(self.ui.rod_mount_x_ctc.text()),
+                'rod_mount_y_ctc': str(self.ui.rod_mount_y_ctc.text()),
+                'rod_mount_z_ctc': str(self.ui.rod_mount_z_ctc.text()),
+                'motor_x': str(self.ui.motor_x.text()),
+                'motor_y': str(self.ui.motor_y.text()),
+                'motor_z': str(self.ui.motor_z.text()),
+                'motor_angle': str(self.ui.motor_angle.text()),
+                'ctc_length': str(self.ui.ctc_length.text()),
+                'ctc_neutral_angle': str(self.ui.ctc_neutral_angle.text()),
+                'ctc_rotation': str(self.ui.ctc_rotation.text()),
+                'motor_torque_ctc': str(self.ui.motor_torque_ctc.text()),
+                'motor_rpm_ctc': str(self.ui.motor_rpm_ctc.text()),
+                'i_pitch_ctc': str(self.ui.i_pitch_ctc.text()),
+                'i_roll_ctc': str(self.ui.i_roll_ctc.text()),
+                'pitch_linear_rad_ctc': str(self.ui.pitch_linear_rad_ctc.text()),
+                'roll_linear_rad_ctc': str(self.ui.roll_linear_rad_ctc.text()),
+                'rod_mount_x_linear': str(self.ui.rod_mount_x_linear.text()),
+                'rod_mount_y_linear': str(self.ui.rod_mount_y_linear.text()),
+                'rod_mount_z_linear': str(self.ui.rod_mount_z_linear.text()),
+                'lower_mount_x_linear': str(self.ui.lower_mount_x_linear.text()),
+                'lower_mount_y_linear': str(self.ui.lower_mount_y_linear.text()),
+                'lower_mount_z_linear': str(self.ui.lower_mount_z_linear.text()),
+                'linear_travel': str(self.ui.linear_travel.text()),
+                'screw_pitch': str(self.ui.screw_pitch.text()),
+                'motor_torque_linear': str(self.ui.motor_torque_linear.text()),
+                'motor_rpm_linear': str(self.ui.motor_rpm_linear.text()),
+                'i_pitch_linear': str(self.ui.i_pitch_linear.text()),
+                'i_roll_linear': str(self.ui.i_roll_linear.text()),
+                'pitch_linear_rad_linear': str(self.ui.pitch_linear_rad_linear.text()),
+                'roll_linear_rad_linear': str(self.ui.roll_linear_rad_linear.text()),
+                'inputs_tab_index': str(self.ui.inputs_tab.currentIndex()),
+                'outputs_tab_index': str(self.ui.outputs_tab.currentIndex()),
+                }
+
+        info = json.dumps(info)
+        with open(file[0], 'w') as f:
+            f.write(info)
+
+    def open(self):
+        file = Widgets.QFileDialog.getOpenFileName(parent=self, caption='Open file',
+                                                   filter='MotionVisualizer Files (*.mv)')
+
+        with open(file[0], 'r') as f:
+            info = json.loads(f.read())
+
+        self.ui.rod_mount_x_ctc.setText(info['rod_mount_x_ctc'])
+        self.ui.rod_mount_y_ctc.setText(info['rod_mount_y_ctc'])
+        self.ui.rod_mount_z_ctc.setText(info['rod_mount_z_ctc'])
+        self.ui.motor_x.setText(info['motor_x'])
+        self.ui.motor_y.setText(info['motor_y'])
+        self.ui.motor_z.setText(info['motor_z'])
+        self.ui.motor_angle.setText(info['motor_angle'])
+        self.ui.ctc_length.setText(info['ctc_length'])
+        self.ui.ctc_neutral_angle.setText(info['ctc_neutral_angle'])
+        self.ui.ctc_rotation.setText(info['ctc_rotation'])
+        self.ui.motor_torque_ctc.setText(info['motor_torque_ctc'])
+        self.ui.motor_rpm_ctc.setText(info['motor_rpm_ctc'])
+        self.ui.i_pitch_ctc.setText(info['i_pitch_ctc'])
+        self.ui.i_roll_ctc.setText(info['i_roll_ctc'])
+        self.ui.pitch_linear_rad_ctc.setText(info['pitch_linear_rad_ctc'])
+        self.ui.roll_linear_rad_ctc.setText(info['roll_linear_rad_ctc'])
+        self.ui.rod_mount_x_linear.setText(info['rod_mount_x_linear'])
+        self.ui.rod_mount_y_linear.setText(info['rod_mount_y_linear'])
+        self.ui.rod_mount_z_linear.setText(info['rod_mount_z_linear'])
+        self.ui.lower_mount_x_linear.setText(info['lower_mount_x_linear'])
+        self.ui.lower_mount_y_linear.setText(info['lower_mount_y_linear'])
+        self.ui.lower_mount_z_linear.setText(info['lower_mount_z_linear'])
+        self.ui.linear_travel.setText(info['linear_travel'])
+        self.ui.screw_pitch.setText(info['screw_pitch'])
+        self.ui.motor_torque_linear.setText(info['motor_torque_linear'])
+        self.ui.motor_rpm_linear.setText(info['motor_rpm_linear'])
+        self.ui.i_pitch_linear.setText(info['i_pitch_linear'])
+        self.ui.i_roll_linear.setText(info['i_roll_linear'])
+        self.ui.pitch_linear_rad_linear.setText(info['pitch_linear_rad_linear'])
+        self.ui.roll_linear_rad_linear.setText(info['roll_linear_rad_linear'])
+        self.ui.inputs_tab.setCurrentIndex(int(info['inputs_tab_index']))
+        self.ui.outputs_tab.setCurrentIndex(int(info['outputs_tab_index']))
+
+        if int(info['inputs_tab_index']) == 0:
+            self.calculate_ctc()
+        elif int(info['inputs_tab_index']) == 1:
+            self.calculate_linear()
 
     def plot(self, title1, title2, data1, data2):
         fig = Figure(figsize=(6, 6), dpi=100)
@@ -64,7 +155,7 @@ class CalcWindow(Widgets.QMainWindow):
         self.ui.omegas_label.setPixmap(QPixmap.fromImage(omega_plot))
 
         if (float(self.ui.i_pitch_ctc.text()) > 0 or float(self.ui.i_roll_ctc.text()) > 0 or
-            float(self.ui.i_pitch_linear.text()) > 0 or float(self.ui.i_roll_linear.text()) > 0):
+                float(self.ui.i_pitch_linear.text()) > 0 or float(self.ui.i_roll_linear.text()) > 0):
             self.ui.alphas_label.setPixmap(QPixmap.fromImage(alpha_plot))
             self.ui.linear_acc_label.setPixmap(QPixmap.fromImage(acc_plot))
             self.ui.linear_speed_label.setPixmap(QPixmap.fromImage(speed_plot))
