@@ -410,12 +410,12 @@ class Rig:
             if np.isclose(0, pitch - self.rod_mount_base_angle) and np.isclose(0, roll):
                 self.median_pitch_and_roll_torques = (pitch_torque, roll_torque)
 
-        # print(self.pitch)
-        # print(self.roll)
-        # print(self.pitch_torque)
-        # print(self.roll_torque)
-        # print(self.pitch_omega)
-        # print(self.roll_omega)
+        print(self.pitch)
+        print(self.roll)
+        print(self.pitch_torque)
+        print(self.roll_torque)
+        print(self.pitch_omega)
+        print(self.roll_omega)
 
     def calculate(self):
         """

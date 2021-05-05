@@ -146,7 +146,7 @@ class CalcWindow(Widgets.QMainWindow):
 
     def make_plots(self):
         torque_plot = self.plot('Pitch Torque', 'Roll Torque', self.rig.pitch_torque, self.rig.roll_torque)
-        omega_plot = self.plot('Pitch Torque', 'Roll Torque', self.rig.pitch_omega, self.rig.roll_omega)
+        omega_plot = self.plot('Pitch Omega', 'Roll Omega', self.rig.pitch_omega, self.rig.roll_omega)
         alpha_plot = self.plot('Pitch Alpha', 'Roll Alpha', self.rig.pitch_alpha, self.rig.roll_alpha)
         acc_plot = self.plot('Pitch Acceleration', 'Roll Acceleration',
                              self.rig.pitch_linear_acc, self.rig.roll_linear_acc)
