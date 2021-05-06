@@ -107,7 +107,7 @@ class Ui_MainWindow(object):
         self.outputs_tab.addTab(self.linear_acc_tab, "")
         self.inputs_tab = QTabWidget(self.centralwidget)
         self.inputs_tab.setObjectName(u"inputs_tab")
-        self.inputs_tab.setGeometry(QRect(680, 10, 461, 621))
+        self.inputs_tab.setGeometry(QRect(680, 10, 461, 651))
         self.ctc_tab = QWidget()
         self.ctc_tab.setObjectName(u"ctc_tab")
         self.inputs_group_ctc = QGroupBox(self.ctc_tab)
@@ -229,7 +229,7 @@ class Ui_MainWindow(object):
         self.label_52.setGeometry(QRect(10, 80, 121, 16))
         self.groupBox_13 = QGroupBox(self.ctc_tab)
         self.groupBox_13.setObjectName(u"groupBox_13")
-        self.groupBox_13.setGeometry(QRect(10, 370, 441, 211))
+        self.groupBox_13.setGeometry(QRect(10, 370, 441, 241))
         self.label_38 = QLabel(self.groupBox_13)
         self.label_38.setObjectName(u"label_38")
         self.label_38.setGeometry(QRect(10, 30, 121, 16))
@@ -289,6 +289,13 @@ class Ui_MainWindow(object):
         self.label_49 = QLabel(self.groupBox_13)
         self.label_49.setObjectName(u"label_49")
         self.label_49.setGeometry(QRect(10, 180, 141, 20))
+        self.label_55 = QLabel(self.groupBox_13)
+        self.label_55.setObjectName(u"label_55")
+        self.label_55.setGeometry(QRect(10, 210, 141, 20))
+        self.pushrod_force_ctc = QLineEdit(self.groupBox_13)
+        self.pushrod_force_ctc.setObjectName(u"pushrod_force_ctc")
+        self.pushrod_force_ctc.setEnabled(False)
+        self.pushrod_force_ctc.setGeometry(QRect(170, 210, 61, 22))
         self.inputs_tab.addTab(self.ctc_tab, "")
         self.la_tab = QWidget()
         self.la_tab.setObjectName(u"la_tab")
@@ -399,7 +406,7 @@ class Ui_MainWindow(object):
         self.label_54.setGeometry(QRect(10, 80, 121, 16))
         self.groupBox_12 = QGroupBox(self.la_tab)
         self.groupBox_12.setObjectName(u"groupBox_12")
-        self.groupBox_12.setGeometry(QRect(10, 370, 441, 211))
+        self.groupBox_12.setGeometry(QRect(10, 370, 441, 241))
         self.label_32 = QLabel(self.groupBox_12)
         self.label_32.setObjectName(u"label_32")
         self.label_32.setGeometry(QRect(10, 30, 121, 16))
@@ -442,6 +449,13 @@ class Ui_MainWindow(object):
         self.label_51 = QLabel(self.groupBox_12)
         self.label_51.setObjectName(u"label_51")
         self.label_51.setGeometry(QRect(10, 150, 141, 20))
+        self.pushrod_force_linear = QLineEdit(self.groupBox_12)
+        self.pushrod_force_linear.setObjectName(u"pushrod_force_linear")
+        self.pushrod_force_linear.setEnabled(False)
+        self.pushrod_force_linear.setGeometry(QRect(170, 210, 61, 22))
+        self.label_56 = QLabel(self.groupBox_12)
+        self.label_56.setObjectName(u"label_56")
+        self.label_56.setGeometry(QRect(10, 210, 141, 20))
         self.button_calc_linear = QPushButton(self.la_tab)
         self.button_calc_linear.setObjectName(u"button_calc_linear")
         self.button_calc_linear.setGeometry(QRect(380, 430, 61, 24))
@@ -527,12 +541,12 @@ class Ui_MainWindow(object):
                         "in-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Torque is reported in whatever units are used as force and length.</span></p>\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Omega is angular speed and is reported in units of degrees / second.</span></p>\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Alpha is angular acceleration and is reported in units of degrees / second squared.</span></p>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Min &amp; Max CTC Pushrod Angle should never be allowed to toggle, go past 0.</span></p>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-inde"
-                        "nt:0px;\"><span style=\" font-size:10pt;\">Max Pitch and Roll Omega are the max achievable speed if accelerated with the max torqu through all of the pitch or roll range of motion. Uses a constant torque equal to that of the torque when pitch and roll positions are both 0 degrees. Represents the max possible values.</span></p>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Since pitch and roll omega plots represent the speed at that position given the motors' input RPM, if the value is higher than the &quot;Max Pitch Omega&quot; or &quot;Max Roll Omega&quot; respectively, then that the plotted speed is unachivable so it may make sense to change geometry so that lower omegas but higher alphas are plotted.</span></p>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">When Saving, inputs from bo"
-                        "th tabs are saved.</span></p>\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Min &amp; Max CTC Pushrod Angle should never be allowed to toggle, go past 0 (negative).</span></p>\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0"
+                        "; text-indent:0px;\"><span style=\" font-size:10pt;\">Max Pitch and Roll Omega are the max achievable speed if accelerated with the max torqu through all of the pitch or roll range of motion. Uses a constant torque equal to that of the torque when pitch and roll positions are both 0 degrees. Represents the max possible values.</span></p>\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Since pitch and roll omega plots represent the speed at that position given the motors' input RPM, if the value is higher than the &quot;Pitch Omega From Torque&quot; or &quot;Roll Omega From Torque&quot; respectively, then that the plotted speed is unachivable and the max speed is torque limited, if the plotted speed is lower than the max speed is motor RPM limited.</span></p>\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" fo"
+                        "nt-size:10pt;\">When Saving, inputs from both tabs are saved.</span></p>\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">When Opening, the generated plots and outputs are for the inputs tab that was active when the file was Saved.</span></p></body></html>", None))
         self.outputs_tab.setTabText(self.outputs_tab.indexOf(self.tab_3), QCoreApplication.translate("MainWindow", u"Info", None))
         self.torques_label.setText("")
@@ -599,9 +613,11 @@ class Ui_MainWindow(object):
         self.label_46.setText(QCoreApplication.translate("MainWindow", u"Pushrod Length", None))
         self.pushrod_length_ctc.setText("")
         self.max_pitch_omega_ctc.setText("")
-        self.label_48.setText(QCoreApplication.translate("MainWindow", u"Max Pitch Omega", None))
+        self.label_48.setText(QCoreApplication.translate("MainWindow", u"Pitch Omega From Torque", None))
         self.max_roll_omega_ctc.setText("")
-        self.label_49.setText(QCoreApplication.translate("MainWindow", u"Max Roll Omega", None))
+        self.label_49.setText(QCoreApplication.translate("MainWindow", u"Roll Omega From Torque", None))
+        self.label_55.setText(QCoreApplication.translate("MainWindow", u"Pushrod Max Force", None))
+        self.pushrod_force_ctc.setText("")
         self.inputs_tab.setTabText(self.inputs_tab.indexOf(self.ctc_tab), QCoreApplication.translate("MainWindow", u"CTC Based", None))
         self.inputs_group_linear.setTitle(QCoreApplication.translate("MainWindow", u"Inputs", None))
         self.groupBox_9.setTitle(QCoreApplication.translate("MainWindow", u"Geometry", None))
@@ -651,6 +667,8 @@ class Ui_MainWindow(object):
         self.label_50.setText(QCoreApplication.translate("MainWindow", u"Max Roll Omega", None))
         self.max_roll_omega_linear.setText("")
         self.label_51.setText(QCoreApplication.translate("MainWindow", u"Max Pitch Omega", None))
+        self.pushrod_force_linear.setText("")
+        self.label_56.setText(QCoreApplication.translate("MainWindow", u"Pushrod Max Force", None))
         self.button_calc_linear.setText(QCoreApplication.translate("MainWindow", u"Calc", None))
         self.inputs_tab.setTabText(self.inputs_tab.indexOf(self.la_tab), QCoreApplication.translate("MainWindow", u"Linear Actuator", None))
         self.menuFile.setTitle(QCoreApplication.translate("MainWindow", u"File", None))

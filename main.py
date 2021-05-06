@@ -116,8 +116,8 @@ class CalcWindow(Widgets.QMainWindow):
         elif int(info['inputs_tab_index']) == 1:
             self.calculate_linear()
 
-    def plot(self, title1, title2, data1, data2):
-        fig = Figure(figsize=(6, 6), dpi=100)
+    def plot(self, title1, title2, data1, data2, figure_title):
+        fig = Figure(figsize=(6, 8), dpi=100)
         canvas = FigureCanvasAgg(fig)
 
         axs = fig.subplots(2, 1)
@@ -137,7 +137,9 @@ class CalcWindow(Widgets.QMainWindow):
         axs[1].set_ylabel('Degrees of Pitch')
         fig.colorbar(img2, ax=axs[1])
 
-        fig.tight_layout()
+        fig.suptitle(figure_title)
+
+        fig.subplots_adjust(wspace=0.4, hspace=0.4)
 
         canvas.draw()
         buf = canvas.buffer_rgba()
@@ -145,12 +147,17 @@ class CalcWindow(Widgets.QMainWindow):
         return ImageQt.ImageQt(Image.fromarray(X))
 
     def make_plots(self):
-        torque_plot = self.plot('Pitch Torque', 'Roll Torque', self.rig.pitch_torque, self.rig.roll_torque)
-        omega_plot = self.plot('Pitch Omega', 'Roll Omega', self.rig.pitch_omega, self.rig.roll_omega)
-        alpha_plot = self.plot('Pitch Alpha', 'Roll Alpha', self.rig.pitch_alpha, self.rig.roll_alpha)
+        torque_plot = self.plot('Pitch Torque', 'Roll Torque', self.rig.pitch_torque, self.rig.roll_torque,
+                                'Rocker Torque Calculated from Motor Torque Spec')
+        omega_plot = self.plot('Pitch Omega (deg / sec)', 'Roll Omega (deg / sec)', self.rig.pitch_omega, self.rig.roll_omega,
+                               'Rocker Omega Calculated from Motor RPM Spec')
+        alpha_plot = self.plot('Pitch Alpha (deg / sec^2)', 'Roll Alpha (deg / sec^2)', self.rig.pitch_alpha, self.rig.roll_alpha,
+                               'Rocker Alpha Calculated from Motor Torque Spec & Inertias')
         acc_plot = self.plot('Pitch Acceleration', 'Roll Acceleration',
-                             self.rig.pitch_linear_acc, self.rig.roll_linear_acc)
-        speed_plot = self.plot('Pitch Speed', 'Roll Speed', self.rig.pitch_linear_speed, self.rig.roll_linear_speed)
+                             self.rig.pitch_linear_acc, self.rig.roll_linear_acc,
+                             'Linear Acc Calculated from Motor Torque Spec, Inertias, and Inspect. Rad.')
+        speed_plot = self.plot('Pitch Speed', 'Roll Speed', self.rig.pitch_linear_speed, self.rig.roll_linear_speed,
+                               'Linear Speed Calculated from Motor Torque Spec, Inertias, and Inspect. Rad.')
         self.ui.torques_label.setPixmap(QPixmap.fromImage(torque_plot))
         self.ui.omegas_label.setPixmap(QPixmap.fromImage(omega_plot))
 
@@ -191,6 +198,7 @@ class CalcWindow(Widgets.QMainWindow):
         self.ui.min_ctc_pushrod_angle.setText(str(round(self.rig.min_ctc_pushrod_angle, 2)))
         self.ui.max_pitch_omega_ctc.setText(str(round(self.rig.max_pitch_speed, 2)))
         self.ui.max_roll_omega_ctc.setText(str(round(self.rig.max_roll_speed, 2)))
+        self.ui.pushrod_force_ctc.setText(str(round(self.rig.max_pushrod_force, 2)))
 
     def calculate_linear(self):
         self.rig = Rig(np.array([float(self.ui.rod_mount_x_linear.text()),
@@ -219,6 +227,7 @@ class CalcWindow(Widgets.QMainWindow):
         self.ui.nominal_pushrod_length_linear.setText(str(round(self.rig.pushrod_nominal_length, 2)))
         self.ui.max_pitch_omega_linear.setText(str(round(self.rig.max_pitch_speed, 2)))
         self.ui.max_roll_omega_linear.setText(str(round(self.rig.max_roll_speed, 2)))
+        self.ui.pushrod_force_linear.setText(str(round(self.rig.max_pushrod_force, 2)))
 
 
 def run():

@@ -359,6 +359,16 @@ class Rig:
 
             return self._calc_pitch_and_roll(rod_mount1, rod_mount2)
 
+        def pushrod_force(torque, position1, position2, estimated_coords):
+            x1, x2, y1, y2, z1, z2 = estimated_coords
+            rod_mount1, rod_mount2 = self._calc_rod_mount_points(position1, position2, estimated_coords)
+
+            unit_vector = rod_mount1 / self.rod_mount_length
+
+            return torque / (2 * (unit_vector[0] * y1 + unit_vector[1] * x1))
+
+
+
         self.pitch_torque = []
         self.roll_torque = []
         self.pitch_omega = []
@@ -371,6 +381,7 @@ class Rig:
         self.roll_linear_speed = []
         self.pitch_linear_acc = []
         self.roll_linear_acc = []
+        self.max_pushrod_force = []
 
         last_estimated_coords = get_starting_coords()
         for position1, position2 in grid_points():
@@ -406,16 +417,19 @@ class Rig:
             self.roll_linear_acc.append(roll_torque / self.i_roll * self.roll_linear_rad)
             self.pitch_linear_speed.append(np.radians(pitch_omega) * self.pitch_linear_rad)
             self.roll_linear_speed.append(np.radians(roll_omega) * self.roll_linear_rad)
+            self.max_pushrod_force.append(pushrod_force(pitch_torque, position1, position2, estimated_coords))
 
             if np.isclose(0, pitch - self.rod_mount_base_angle) and np.isclose(0, roll):
                 self.median_pitch_and_roll_torques = (pitch_torque, roll_torque)
 
-        print(self.pitch)
-        print(self.roll)
-        print(self.pitch_torque)
-        print(self.roll_torque)
-        print(self.pitch_omega)
-        print(self.roll_omega)
+        self.max_pushrod_force = max(self.max_pushrod_force)
+
+        # print(self.pitch)
+        # print(self.roll)
+        # print(self.pitch_torque)
+        # print(self.roll_torque)
+        # print(self.pitch_omega)
+        # print(self.roll_omega)
 
     def calculate(self):
         """

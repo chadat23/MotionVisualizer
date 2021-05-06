@@ -24,6 +24,10 @@ From within the virtual environment, run the below code to package the app into 
 `$ pyinstaller --name="MotionVisualizer" --windowed --onefile main.py --add-data "venv/lib/site-packages/PySide6/plugins;PySide6/plugins/`
 
 ## Change Log
+### 0.0.3
+* Added Pushrod Max Force.
+* Clarified some labels.
+
 ### 0.0.2
 * Fixed math bug.
 * Added inertia to inputs.
