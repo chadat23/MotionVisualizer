@@ -155,9 +155,9 @@ class CalcWindow(Widgets.QMainWindow):
                                'Rocker Alpha Calculated from Motor Torque Spec & Inertias')
         acc_plot = self.plot('Pitch Acceleration', 'Roll Acceleration',
                              self.rig.pitch_linear_acc, self.rig.roll_linear_acc,
-                             'Linear Acc Calculated from Motor Torque Spec, Inertias, and Inspect. Rad.')
+                             'Linear Acc Calculated from\nMotor Torque Spec, Inertias, and Inspect. Rad.')
         speed_plot = self.plot('Pitch Speed', 'Roll Speed', self.rig.pitch_linear_speed, self.rig.roll_linear_speed,
-                               'Linear Speed Calculated from Motor Torque Spec, Inertias, and Inspect. Rad.')
+                               'Linear Speed Calculated from\nMotor Torque Spec, Inertias, and Inspect. Rad.')
         self.ui.torques_label.setPixmap(QPixmap.fromImage(torque_plot))
         self.ui.omegas_label.setPixmap(QPixmap.fromImage(omega_plot))
 
@@ -193,12 +193,15 @@ class CalcWindow(Widgets.QMainWindow):
         self.ui.zx_rodmount_angle_ctc.setText(str(round(self.rig.zx_rodmount_angle_ctc, 2)))
         self.ui.zx_pushrod_angle_ctc.setText(str(round(self.rig.zx_pushrod_angle_ctc, 2)))
         self.ui.xy_rodmount_pushrod_angle_ctc.setText(str(round(self.rig.xy_rodmount_pushrod_angle_ctc, 2)))
-        self.ui.pushrod_length_ctc.setText(str(round(self.rig.pushrod_length, 2)))
+        self.ui.pushrod_length_ctc.setText(str(round(self.rig.pushrod_length, 3)))
         self.ui.max_ctc_pushrod_angle.setText(str(round(self.rig.max_ctc_pushrod_angle, 2)))
         self.ui.min_ctc_pushrod_angle.setText(str(round(self.rig.min_ctc_pushrod_angle, 2)))
         self.ui.max_pitch_omega_ctc.setText(str(round(self.rig.max_pitch_speed, 2)))
         self.ui.max_roll_omega_ctc.setText(str(round(self.rig.max_roll_speed, 2)))
         self.ui.pushrod_force_ctc.setText(str(round(self.rig.max_pushrod_force, 2)))
+        self.ui.pitch_roll_ratio_ctc.setText(str(round(self.rig.pitch_roll_ratio, 4)))
+        self.ui.max_pitch_ctc.setText(str(round(max(self.rig.pitch), 2)))
+        self.ui.max_roll_ctc.setText(str(round(max(self.rig.roll), 2)))
 
     def calculate_linear(self):
         self.rig = Rig(np.array([float(self.ui.rod_mount_x_linear.text()),
@@ -228,6 +231,9 @@ class CalcWindow(Widgets.QMainWindow):
         self.ui.max_pitch_omega_linear.setText(str(round(self.rig.max_pitch_speed, 2)))
         self.ui.max_roll_omega_linear.setText(str(round(self.rig.max_roll_speed, 2)))
         self.ui.pushrod_force_linear.setText(str(round(self.rig.max_pushrod_force, 2)))
+        self.ui.pitch_roll_ratio_linear.setText(str(round(self.rig.pitch_roll_ratio, 4)))
+        self.ui.max_pitch_linear.setText(str(round(max(self.rig.pitch), 2)))
+        self.ui.max_roll_linear.setText(str(round(max(self.rig.roll), 2)))
 
 
 def run():

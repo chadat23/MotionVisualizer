@@ -421,6 +421,7 @@ class Rig:
 
             if np.isclose(0, pitch - self.rod_mount_base_angle) and np.isclose(0, roll):
                 self.median_pitch_and_roll_torques = (pitch_torque, roll_torque)
+                self.pitch_roll_ratio = pitch_torque / roll_torque
 
         self.max_pushrod_force = max(self.max_pushrod_force)
 

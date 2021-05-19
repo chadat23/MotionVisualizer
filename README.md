@@ -26,6 +26,8 @@ From within the virtual environment, run the below code to package the app into 
 ## Change Log
 ### 0.0.3
 * Added Pushrod Max Force.
+* Added Max Angles
+* Added Pitch / Roll Ratio
 * Clarified some labels.
 
 ### 0.0.2
