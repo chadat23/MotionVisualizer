@@ -97,7 +97,8 @@ def test_calc_rod_mount_locations_ctc(rig_ctc_w_I, ctc_angles_w_rod_mount_locati
     ctc_angle1, ctc_angle2, expected_point1, expected_point2 = ctc_angles_w_rod_mount_locations
 
     rm = rig_ctc_w_I.rod_mount
-    points = rm[0], rm[0], rm[1], rm[1], rm[2], -rm[2]
+    # points = rm[0], rm[0], rm[1], rm[1], rm[2], -rm[2]
+    points = (np.array([rm[0], rm[1], rm[2]]), np.array([rm[0], rm[1], -rm[2]]))
     actual_point1, actual_point2 = rig_ctc_w_I._calc_rod_mount_points(ctc_angle1, ctc_angle2, points)
 
     assert np.all(np.isclose(expected_point1, actual_point1, atol=1e-3))
@@ -108,20 +109,42 @@ def test_calc_rod_mount_locations_la(rig_la_w_I, pushrod_lengths_w_mount_locatio
     pushrod1, pushrod2, rod_mount1, rod_mount2 = pushrod_lengths_w_mount_locations
 
     rm = rig_la_w_I.rod_mount
-    points = rm[0], rm[0], rm[1], rm[1], rm[2], -rm[2]
+    # points = rm[0], rm[0], rm[1], rm[1], rm[2], -rm[2]
+    points = (np.array([rm[0], rm[1], rm[2]]), np.array([rm[0], rm[1], -rm[2]]))
     actual_point1, actual_point2 = rig_la_w_I._calc_rod_mount_points(pushrod1, pushrod2, points)
 
     assert np.all(np.isclose(rod_mount1, actual_point1, atol=1e-3))
     assert np.all(np.isclose(rod_mount2, actual_point2, atol=1e-3))
 
 
-# def test_calc_max_pitch_and_roll(rig_ctc_w_I):
-#     assert np.all(np.isclose(rig_ctc_w_I.calc_max_pitch_and_roll(), (0.02641194943376135, 0.09353076808170989)))
-
-
 def test_calc_pitch_and_roll(rig_ctc_w_I, rod_mounts_and_pitch_and_roll):
     rod_mount1, rod_mount2, pitch_and_roll = rod_mounts_and_pitch_and_roll
     assert np.all(np.isclose(rig_ctc_w_I._calc_pitch_and_roll(rod_mount1, rod_mount2), pitch_and_roll))
+
+
+def test__get_starting_points(rig_ctc_w_I):
+    points = np.array([23.77483606, 27.34514893, 8.5]), np.array([23.77483606, 27.34514893, -8.5])
+    actual = rig_ctc_w_I._get_starting_points()
+
+    assert np.all(np.isclose(points, actual))
+
+
+def test__get_starting_points_2(rig_ctc_w_I_2):
+    points = np.array([0.29781586, -0.03613470, 0.2]), np.array([0.29781586, -0.03613470, -0.2])
+    actual = rig_ctc_w_I_2._get_starting_points()
+
+    assert np.all(np.isclose(points, actual))
+
+
+def test_numerical_derivative_2(rig_ctc_w_I_2):
+    rig_ctc_w_I_2.delta = .01745
+    a = rig_ctc_w_I_2._numerical_derivative(-0.043633231299858216 - .01745,
+                                            0.04363323129985827 - .01745,
+                                            -0.043633231299858216 + .01745,
+                                            0.04363323129985827 + .01745,
+                                            (np.array([0.3, -.002, 0.2]), np.array([0.3, -6e-11, -0.2])))
+
+    assert np.isclose(a[0], 0.166, rtol=3)
 
 
 def test_calc_performance_ctc(rig_ctc_w_I, performance_info_ctc):

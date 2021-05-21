@@ -24,6 +24,25 @@ def rig_ctc_inputs():
 
 
 @pytest.fixture
+def rig_ctc_inputs_2():
+    rod_mount = np.array([0.3, 0.0, 0.2])
+    motor_point = np.array([0.25, -0.1, 0.2])
+
+    motor_angle = 0
+
+    ctc_length = 0.05
+    rest_angle = 0
+    total_rotation = 90
+    motor_torque = 40
+    motor_rpm = 70
+
+    return (rod_mount, motor_point,
+            motor_angle, motor_torque, motor_rpm,
+            ctc_length, rest_angle, total_rotation,
+            'ctc')
+
+
+@pytest.fixture
 def rig_la_inputs():
     rod_mount = np.array([23., 28.0, 8.5])
     motor_point = np.array([45.5, -8., 13.])
@@ -46,6 +65,22 @@ def rig_ctc_w_I(rig_ctc_inputs):
      motor_angle, motor_torque, motor_rpm,
      ctc_length, ctc_rest_angle, ctc_total_rotation,
      drive) = rig_ctc_inputs
+
+    rig = Rig(rod_mount, motor_point,
+              motor_angle=motor_angle, motor_torque=motor_torque, motor_rpm=motor_rpm,
+              ctc_length=ctc_length, ctc_neutral_angle=ctc_rest_angle, ctc_total_rotation=ctc_total_rotation,
+              drive=drive)
+
+    return rig
+
+
+
+@pytest.fixture
+def rig_ctc_w_I_2(rig_ctc_inputs_2):
+    (rod_mount, motor_point,
+     motor_angle, motor_torque, motor_rpm,
+     ctc_length, ctc_rest_angle, ctc_total_rotation,
+     drive) = rig_ctc_inputs_2
 
     rig = Rig(rod_mount, motor_point,
               motor_angle=motor_angle, motor_torque=motor_torque, motor_rpm=motor_rpm,
