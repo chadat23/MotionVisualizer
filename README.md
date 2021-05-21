@@ -25,6 +25,7 @@ From within the virtual environment, run the below code to package the app into 
 
 ## Change Log
 ### 0.0.3
+* Fixed rounding bug.
 * Added Pushrod Max Force.
 * Added Max Angles
 * Added Pitch / Roll Ratio
