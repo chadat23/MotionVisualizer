@@ -1121,15 +1121,15 @@ p, li { white-space: pre-wrap; }
         <string>Pitch / Roll Ratio</string>
        </property>
       </widget>
-      <widget class="QLineEdit" name="max_pitch_ctc">
+      <widget class="QLineEdit" name="min_max_pitch_ctc">
        <property name="enabled">
         <bool>false</bool>
        </property>
        <property name="geometry">
         <rect>
-         <x>370</x>
+         <x>340</x>
          <y>60</y>
-         <width>61</width>
+         <width>91</width>
          <height>22</height>
         </rect>
        </property>
@@ -1147,18 +1147,18 @@ p, li { white-space: pre-wrap; }
         </rect>
        </property>
        <property name="text">
-        <string>Max Pitch</string>
+        <string>Min / Max Pitch</string>
        </property>
       </widget>
-      <widget class="QLineEdit" name="max_roll_ctc">
+      <widget class="QLineEdit" name="min_max_roll_ctc">
        <property name="enabled">
         <bool>false</bool>
        </property>
        <property name="geometry">
         <rect>
-         <x>370</x>
+         <x>340</x>
          <y>90</y>
-         <width>61</width>
+         <width>91</width>
          <height>22</height>
         </rect>
        </property>
@@ -1176,7 +1176,7 @@ p, li { white-space: pre-wrap; }
         </rect>
        </property>
        <property name="text">
-        <string>Max Roll</string>
+        <string>Min / Max Roll</string>
        </property>
       </widget>
      </widget>
@@ -1897,15 +1897,15 @@ p, li { white-space: pre-wrap; }
         <string>Calc</string>
        </property>
       </widget>
-      <widget class="QLineEdit" name="max_roll_linear">
+      <widget class="QLineEdit" name="min_max_roll_linear">
        <property name="enabled">
         <bool>false</bool>
        </property>
        <property name="geometry">
         <rect>
-         <x>370</x>
+         <x>340</x>
          <y>90</y>
-         <width>61</width>
+         <width>91</width>
          <height>22</height>
         </rect>
        </property>
@@ -1923,18 +1923,18 @@ p, li { white-space: pre-wrap; }
         </rect>
        </property>
        <property name="text">
-        <string>Max Pitch</string>
+        <string>Min / Max Pitch</string>
        </property>
       </widget>
-      <widget class="QLineEdit" name="max_pitch_linear">
+      <widget class="QLineEdit" name="min_max_pitch_linear">
        <property name="enabled">
         <bool>false</bool>
        </property>
        <property name="geometry">
         <rect>
-         <x>370</x>
+         <x>340</x>
          <y>60</y>
-         <width>61</width>
+         <width>91</width>
          <height>22</height>
         </rect>
        </property>
@@ -1952,7 +1952,7 @@ p, li { white-space: pre-wrap; }
         </rect>
        </property>
        <property name="text">
-        <string>Max Roll</string>
+        <string>Min / Max Roll</string>
        </property>
       </widget>
      </widget>

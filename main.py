@@ -200,8 +200,8 @@ class CalcWindow(Widgets.QMainWindow):
         self.ui.max_roll_omega_ctc.setText(str(round(self.rig.max_roll_speed, 2)))
         self.ui.pushrod_force_ctc.setText(str(round(self.rig.max_pushrod_force, 2)))
         self.ui.pitch_roll_ratio_ctc.setText(str(round(self.rig.pitch_roll_ratio, 4)))
-        self.ui.max_pitch_ctc.setText(str(round(max(self.rig.pitch), 2)))
-        self.ui.max_roll_ctc.setText(str(round(max(self.rig.roll), 2)))
+        self.ui.min_max_pitch_ctc.setText(f'{round(min(self.rig.pitch), 2)} / {round(max(self.rig.pitch), 2)}')
+        self.ui.min_max_roll_ctc.setText(f'{round(min(self.rig.roll), 2)} / {round(max(self.rig.roll), 2)}')
 
     def calculate_linear(self):
         self.rig = Rig(np.array([float(self.ui.rod_mount_x_linear.text()),
@@ -232,8 +232,8 @@ class CalcWindow(Widgets.QMainWindow):
         self.ui.max_roll_omega_linear.setText(str(round(self.rig.max_roll_speed, 2)))
         self.ui.pushrod_force_linear.setText(str(round(self.rig.max_pushrod_force, 2)))
         self.ui.pitch_roll_ratio_linear.setText(str(round(self.rig.pitch_roll_ratio, 4)))
-        self.ui.max_pitch_linear.setText(str(round(max(self.rig.pitch), 2)))
-        self.ui.max_roll_linear.setText(str(round(max(self.rig.roll), 2)))
+        self.ui.min_max_pitch_linear.setText(f'{round(min(self.rig.pitch), 2)} / {round(max(self.rig.pitch), 2)}')
+        self.ui.min_max_roll_linear.setText(f'{round(min(self.rig.roll), 2)} / {round(max(self.rig.roll), 2)}')
 
 
 def run():
