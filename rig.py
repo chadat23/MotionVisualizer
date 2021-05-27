@@ -351,7 +351,10 @@ class Rig:
             self.roll_linear_acc.append(self.roll_alpha[-1] * self.roll_linear_rad)
             self.pitch_linear_speed.append(np.radians(self.pitch_omega[-1]) * self.pitch_linear_rad)
             self.roll_linear_speed.append(np.radians(self.roll_omega[-1]) * self.roll_linear_rad)
-            self.max_pushrod_force.append(pushrod_force(self.pitch_torque[-1], position1, position2, estimated_points))
+            self.max_pushrod_force.append(pushrod_force(self.pitch_torque[-1] / 2,
+                                                        position1,
+                                                        position2,
+                                                        estimated_points))
 
             if np.isclose(0, pitch - self.rod_mount_base_angle) and np.isclose(0, roll):
                 self.median_pitch_and_roll_torques = (self.pitch_torque[-1], self.roll_torque[-1])
