@@ -27,8 +27,8 @@ From within the virtual environment, run the below code to package the app into 
 ### 0.0.3
 * Fixed rounding bug.
 * Added Pushrod Max Force.
-* Added Min / Max Angles
-* Added Pitch / Roll Ratio
+* Added Min / Max Angles.
+* Added Pitch / Roll Ratio.
 * Clarified some labels.
 
 ### 0.0.2
@@ -36,7 +36,7 @@ From within the virtual environment, run the below code to package the app into 
 * Added inertia to inputs.
 * Added max angular speeds to outputs.
 * Added Alphas tab.  
-* Added pushrod length to outputs.
+* Added Pushrod length to outputs.
 * Fixed plot labels.
 * Added inspection radii to inputs.
 * Added linear speed and acc. tabs.
